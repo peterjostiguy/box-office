@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "box-office-fantasy",
+  "private_key_id": "78642d5d71985a0077f7d411b36b1fe33ef0b191",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzjKsJ59qAWMSI\nll7fjV32spEKHNytybfWA3tFAnfupeu2mV2V/JWll0SUHRvHqiYfEUynobQwRSPX\nkNFG5LfyXEzGgu/IdH4t8vBmYnxncbdbhs68fRdY4P2SiRZd7PZf5tX+++wbrcnQ\nunTl2ByRYHpN43M9a3z/ZPLxLeK5+TxWrEzjb1a9dVr3pa7OxCapxBSQhRuovCWV\n6zz8HwU0SHpo9+SeQbS7QFNVCnrLh+0gCDcUxowuYEG2hgVhiYRClo/hGI+4gvW4\nihTGJ8L0lstn/lP0o0ceHUULu6a//a+Scgm6qKhs+J2OwTQmw1DOwEYgX7f67erg\n2qRN6SytAgMBAAECggEAGccLU0u/OggEh1uXWV8Ra3atjhcgs66vPwGW9AxrrY6S\nrc+M+RifX3u9M8qOD3dlK7avG64CkZ+LispW0WfK5PfNaf6ocE4RQ4WKcBiZpbxU\nx8Yt7i/DZ1Y98YjO9kMsCA67EHWYq0yjGd17JPiG+XQxevc5t0q0UnJq0qd00qAx\nGP1qwPNd1DJ/Vzbrl/KC0Pvc9INhhVaShVWR7Zfss8loKlpB6S45RhKbK8k+XPt1\nMARwPFAsDhOjhjUE+BiZm5nKOY1eXeWrjI5IooAcqXqyepmP93sgkigrZSC3pfaq\n7hnVLcVV8UVTXFKE9BGIDzTPifV1QetXmuV6xOLH3QKBgQDjCcwZdarOB7fryoq+\nbJhGRJjxGFfFcNr/inH0Na/8uYNCCW/g0FUVu6yJamcOF/YakoVkvhnychVFV2kT\nO3vS/EnK2vQ8BTVeNIKEHOmrowx8QLyOBf1lIWhtAljGTBN0y+Obq7TTDiop41ig\nl9csm20rbwmHRquRpwOjazaNswKBgQDKdBGJNKCuDRiRAOmPzHhdWRjNUZZG714e\nZuPgyB/ne+/3G5TZkM+9tUaJ4q6vRfQX1q75K89/lPVfhYsNRZlp4BiI93XtCZQh\nSnZE64A6szUKXQvG8A9r0KnrIOsIGoA66v6L45+UAA+ZCSSvWU86vF/0EErrlefs\nD5xaJR/sHwKBgQCVDc+TP28dyG91PAoOrpjiORL35fVpyIfekPPzUnPxxZFo/20V\n+XCCzi2eId76n7yRAXTWCQBb7Y4Nci+n0ruebse7iDgkV38MFAlD1v+KEYeW46Fm\n1IPhqyc1uf6yYSu82Ebb4sTac0g3K+z5sfYwcPIhO8rTpw/ole+LkE3GhQKBgCuO\nlUdDv14zCxoHbDi38R2EUcW6y+4vCbzYviZaaCLRk2tCz9+PPGLAYZDA6HxlPIL0\neWi6eEYmsjP+80/DraINyLmPJBv/d5NCBfgGAuyeKcc1BZejhm3X0vb3ehmgOf5z\nGJjYPDkHWlO+l9nyCQ3GAY7tAnF1KxSqtyTd3+RZAoGAYrMqC37GGdMS2Rxjyu2y\nngUj3vW75PLXDB4B8BWFnK6wVC4YS5t7IJlajO300yfkqvE2pevu9Ea7H/ESuM2Q\nXXTcbAGjEJWxuvJLcVT8oKxX6UfZK6evRjqFtPFJ93eBfco0pK5T8tdZaxG3UTgo\nDmpx/n9ux+UM30Q+IIiTjWM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-o456x@box-office-fantasy.iam.gserviceaccount.com",
+  "client_id": "113139284633156557490",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-o456x%40box-office-fantasy.iam.gserviceaccount.com"
+}
