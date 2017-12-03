@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "box-office-fantasy",
+  "private_key_id": "761521732eb7e24aa1e4bb2f3969392e7a77525d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqowQnTl8gNFM6\nPCMeo+EaOOp6+HYW4uM9p0sBWMugD3102z5BFFAWpFyjBr4RUzrmvhnpCV4E/liP\nS10VQBXQXBXhqyTdOlA7lGH9I0FqA2ihr/xEg0mTS6irIAh/iJkQNMJDOx+OuVjt\nydGC24jUT6NJhqzA8dfmVIRE+b++EMRy3U2YkOEXbVhy5WSFxki6wmj9dqyt2cK6\nb1A7YeeLFG+hZZsNsAqtHPzXg1dIKXNnY1DsinlA+NlWMFj8vxb0OAZI2uV+Sp7p\nvA87piDqOrWzXiv2YrCpVq5k8++N9GuIttEotWNmA/auGcz3viAd4/4tg2qKNSfu\nwvQr5Bf1AgMBAAECggEAHiDdZWFJm4KRpWkj3E+cOciN4juHgj/6VpL4w9qdTXwe\nryjc45nGEFFiB+jzW1TCRCaRpZthTelo0phAbbWchGcV9/wDbMpUi0iGSq9UZ/cF\nHPNZS/GQZqEHvXtQ9M+2Eu311PAWANnKEWY+h2fiz3XmQ1+zlfe9oq4Okq00RUcf\n0P7tkcWKk9JLJzUemIykfO56T297uB2lPi09x0++gkKEcifgxeZRYTlt2Tkh7tq0\n7/Xvau7pDvH9OgT7+KH4x4ibeVvN9vGv2tb7fcPdf9mbX9oKkWIX92/mF2Dq9s34\n6Midav4gUFzkhCCFfN4k10Dn+LaSpi4I4d4+1v6ucQKBgQDTPFg2nWpU5WJb7nps\ny9M1AED6DUHxEKvuoBjHTLDeQTkI1rTTqGYGNa0mM5OGcxaXVCuyhTz/LQVCqOKh\n5lJN55P3KI6cR0iPzW+T46ywY0X5C5ck/F0Sjh6SuiD7UwCxug5KvWISBLcEHSOD\nFLyFomTf+HB80MVxsiP6wT5KHQKBgQDOzCgXy5JpySMRdPsVVa5tdYadrP0lBLJw\nV3nmZvm8zAqH3L8/xghLP8o16T0OTWCPtnT91dtPRcLY29MCJkFkdFuEPJk+8bQR\nVVYWSjeDAaZLMmSaNYIK3/ypfmZ0JHQ8RhzVfyWgXyOUYDORU00jj46TxJvrVFb8\n2HRwBoRduQKBgQDLUdUy1HfpuVTgWf4axGHKLTFdve8PwtVK/Wx8QPQpKaxlNoyd\nAgUZywabs583FYXUKR9aWObqUwIyNG7YGOJ1vAZvKumBwRc12y6fsdChgxxx59cW\nsZZAau1Am8ltP2p2pzhkdj90SneCjS2GWSpQkov4DKDxct3pXudE0EZNfQKBgQC7\nqBmt1iar5kDzY3NBXfomDCM3TDZ/dC60sTzGLqXrhED+HvxR09PM7TsDBv9HzkGU\nyB6MBZe47PYusfReG/b1QH2XlyH9M3qSzByNp5WORV3xGO6f3XR/h9iQukoglMAB\nviIGPxYW3J690zqYYr46Sdg5EY3n1CYH1ih7S/6ryQKBgCjYzE8YZN84X0IDAJSD\nF4XNW21uHEGGIspAQl06Ofdp1zdwzYCWfJZqgoS99QXoSsx+kgnoYT7kYQkxFWSj\nosyVl67p6l+ZLr5WJAbVUuPXgaBv0XCQB92q9T9pynZnGcB+nzwAvsu0nY7r8w0R\nVjn+GMo3lASZQsB9M+v9CRZn\n-----END PRIVATE KEY-----\n",
+  "client_email": "boxoffice@box-office-fantasy.iam.gserviceaccount.com",
+  "client_id": "102209490695472069126",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/boxoffice%40box-office-fantasy.iam.gserviceaccount.com"
+}
