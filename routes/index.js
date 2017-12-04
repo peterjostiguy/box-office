@@ -11,7 +11,7 @@ var currentObject = {}
 function updateTotal(movieTitle, totalCell){
   axios.get('http://www.theimdbapi.org/api/find/movie?title=coco')
   .then(function(response){
-    cocoData = response
+    cocoData = response.data
   })
 
 
