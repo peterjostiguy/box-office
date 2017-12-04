@@ -34,7 +34,8 @@ router.post('/signin', function(req, res, next){
     dataValues = Object.values(data)
     console.log(dataValues);
     for (var i = 0; i < dataValues.length; i++) {
-      console.log(i, + "  " + dataValues[i]);
+      console.log(i, + "  " + dataValues[i].username)
+      console.log(req.body.username)
       if (dataValues[i].username === req.body.username) {
         console.log("IT'S A MATCH", dataValues[i]);
         var user = dataValues[i]
