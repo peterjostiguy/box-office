@@ -9,32 +9,15 @@ var sheet
 var currentObject = {}
 
 function updateTotal(movieTitle, totalCell){
-  axios.get('http://www.theimdbapi.org/api/find/movie?title=coco')
+  console.log(movieTitle)
+  var url = 'http://www.theimdbapi.org/api/find/movie?title=justice_league'
+  axios.get(url)
   .then(function(response){
-    cocoData = response.data
+    totalCell.value = response.data[0].metadata.gross.slice(0, 12)
+    totalCell.save()
   })
-
-
-
-  // var url = "http://www.theimdbapi.org/api/find/movie?title=" + movieTitle
-  // axios.get(url)
-  // .then(function(response){
-  //   if (response) {
-  //     console.log("THE RESPONSE FOR " + movieTitle);
-  //     console.log(response)
-  //     console.log(response.data)
-  //     console.log(response.data[0])
-  //     totalCell.value = response.data[0].metadata.gross.slice(0, 12)
-  //     totalCell.save()
-  //   }
-  //   else {
-  //     console.log("ERROR! " + movieTitle + "CANNOT BE REACHED");
-  //   }
-  // })
 }
 
-
-updateTotal()
 function updateHTML(cells){
   sheetData = []
   for (var i = 0; i < cells.length; i++) {
@@ -170,10 +153,10 @@ async.series([
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send(cocoData)
+  res.send("Hi")
 })
 
 router.post('/', function(req, res, next) {
-  res.send(cocoData)
+  res.send("hi")
 })
 module.exports = router;

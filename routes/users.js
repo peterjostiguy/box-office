@@ -12,13 +12,14 @@ admin.initializeApp({
 var db = admin.database()
 var ref = db.ref()
 ref.once("value", function(snapshot) {
-  console.log(snapshot.val())
+  //This returns all data from FB DB
+  // console.log(snapshot.val())
 })
 var usersRef = ref.child("users")
 
 router.post('/', function(req, res, next) {
-  console.log("dun did it");
-  res.send('this is the users page')
+  console.log(req.body)
+  res.render('index', {title: "Auth"})
 })
 
 router.get('/', function(req, res, next) {
