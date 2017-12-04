@@ -30,6 +30,7 @@ router.post('/signup', function(req, res, next) {
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     data = snapshot.val()
+    data = snapshot.users
     data = Object.values(data)
     res.send(data)
   })
