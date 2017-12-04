@@ -30,9 +30,8 @@ router.post('/signup', function(req, res, next) {
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     data = snapshot.val()
-    console.log(data)
     console.log(Object.keys(data))
-    data = snapshot.users
+    data = snapshot['users']
     console.log(data)
     data = Object.values(data)
     res.send(data)
