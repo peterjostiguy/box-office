@@ -41,7 +41,12 @@ router.post('/signin', function(req, res, next){
     return user
   })
   .then(function(user){
-    res.send(user)
+    if (user) {
+      res.send(user)
+    }
+    else {
+      res.send("You didn't sign up ya dumb bitch")
+    }
     // bcrypt.compare(req.body.password, user.password, function(err, isMatch){
     //   if (isMatch) {
     //     // res.send('Welome back, ' + user.username)
