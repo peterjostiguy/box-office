@@ -3,15 +3,18 @@ var router = express.Router()
 var admin = require('firebase-admin')
 var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
+var users = require('./routes/users')
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://box-office-fantasy.firebaseio.com/"
-})
+console.log(users);
 
-var db = admin.database()
-var ref = db.ref()
-var usersRef = ref.child("users")
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://box-office-fantasy.firebaseio.com/"
+// })
+//
+// var db = admin.database()
+// var ref = db.ref()
+// var usersRef = ref.child("users")
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
@@ -48,4 +51,4 @@ router.get('/', function(req, res, next) {
   res.send(data.movies)
 })
 
-module.exports = router;
+module.exports = router, ref;
