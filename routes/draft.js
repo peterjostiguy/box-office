@@ -5,17 +5,6 @@ var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
 var ref = require('./firebase.js')
 
-console.log(ref)
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://box-office-fantasy.firebaseio.com/"
-// })
-//
-// var db = admin.database()
-// var ref = db.ref()
-// var usersRef = ref.child("users")
-
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     var data = snapshot.val()
@@ -47,8 +36,10 @@ router.post('/signin', function(req, res, next){
 })
 
 router.get('/', function(req, res, next) {
-  var data = snapshot.val()
-  res.send(data.movies)
+  ref.once('value', function(snapshot){
+    var data = snapshot.val()
+    res.send(data.movies)
+  })
 })
 
 module.exports = router;
