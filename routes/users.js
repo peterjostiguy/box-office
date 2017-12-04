@@ -27,6 +27,25 @@ router.post('/signup', function(req, res, next) {
   res.render('index', {user: req.body.username})
 })
 
+router.post('signin', function(req, res, next){
+  return knex('my_user').insert({agentName: agentName, password: password}, "password")
+  ref.once('/users/').once('value', function(snapshot){
+    console.log(snapshot)
+    return snapshot
+  })
+  .then(function(user){
+    console.log(user)
+    bcrypt.compare(req.body.password, user.password, function(err, isMatch){
+      if (isMatch) {
+        res.send('Welome back, ' + user.username)
+      }
+      else {
+        res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
+      }
+    })
+  })
+})
+
 router.get('/', function(req, res, next) {
   res.send('respond with a resource')
 })
