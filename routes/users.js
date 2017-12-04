@@ -33,15 +33,16 @@ router.post('/signin', function(req, res, next){
     data = data['users']
     dataValues = Object.values(data)
     console.log(dataValues);
+    var authMessage = "You didn't sign up ya dumb bitch"
     for (var i = 0; i < dataValues.length; i++) {
       if (dataValues[i].username === req.body.username) {
         var user = dataValues[i]
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
-            res.send("welcome back", user)
+            authMessage = "welcome back" + user
           }
           else {
-            res.send("You done fucked up", user)
+            authMessage = "You done fucked up" + user
           }
         })
         // var user = dataValues[i]
@@ -49,7 +50,7 @@ router.post('/signin', function(req, res, next){
         break
       }
     }
-    res.send("You didn't sign up ya dumb bitch")
+    res.send(authMessage)
   })
 })
 
