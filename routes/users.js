@@ -36,7 +36,7 @@ router.post('/signin', function(req, res, next){
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
             authMessage = "welcome back" + user.username
-            res.render('users', user )
+            res.render('users', {user: user} )
           }
           else {
             authMessage = "You done fucked up" + user.username
