@@ -31,7 +31,7 @@ router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     data = snapshot.val()
     console.log(Object.keys(data))
-    data = snapshot['users']
+    data = data['users']
     console.log(data)
     data = Object.values(data)
     res.send(data)
