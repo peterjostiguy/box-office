@@ -34,13 +34,16 @@ router.post('/signin', function(req, res, next){
     data = Object.values(data)
     for (var i = 0; i < data.length; i++) {
       if (data[i].username === req.body.username) {
+        console.log("IT'S A MATCH", data[i]);
         var user = data[i]
         return user
       }
     }
+    console.log("step 1", user);
     return user
   })
   .then(function(user){
+    console.log("user 2", user);
     if (user) {
       res.send(user)
     }
