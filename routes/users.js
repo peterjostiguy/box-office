@@ -29,17 +29,19 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
-    console.log(snapshot.users)
-    return snapshot.users
+    console.log(snapshot)
+    return snapshot
   })
   .then(function(user){
     console.log(user)
     bcrypt.compare(req.body.password, user.password, function(err, isMatch){
       if (isMatch) {
-        res.send('Welome back, ' + user.username)
+        // res.send('Welome back, ' + user.username)
+        res.send(user)
       }
       else {
-        res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
+        // res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
+        res.send(user)
       }
     })
   })
