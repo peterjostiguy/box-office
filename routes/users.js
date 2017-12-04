@@ -29,28 +29,30 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
-    data = snapshot.val()
-    console.log(Object.keys(data))
+    var data = snapshot.val()
     data = data['users']
-    console.log(data)
     data = Object.values(data)
-    res.send(data)
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].username === req.body.username) {
+        var user = data[i]
+        return user
+      }
+    }
+    return user
   })
-  // .then(function(user){
-  //   console.log("snapshot is ", typeof user)
-  //   console.log(Object.keys(user))
-  //   console.log('users is ', user['users'])
-  //   bcrypt.compare(req.body.password, user.password, function(err, isMatch){
-  //     if (isMatch) {
-  //       // res.send('Welome back, ' + user.username)
-  //       res.send(user)
-  //     }
-  //     else {
-  //       // res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
-  //       res.send(user)
-  //     }
-  //   })
-  // })
+  .then(function(user){
+    res.send(user)
+    // bcrypt.compare(req.body.password, user.password, function(err, isMatch){
+    //   if (isMatch) {
+    //     // res.send('Welome back, ' + user.username)
+    //     res.send(user)
+    //   }
+    //   else {
+    //     // res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
+    //     res.send(user)
+    //   }
+    // })
+  })
 })
 
 router.get('/', function(req, res, next) {
