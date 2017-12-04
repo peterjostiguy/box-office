@@ -34,28 +34,25 @@ router.post('/signin', function(req, res, next){
     dataValues = Object.values(data)
     console.log(dataValues);
     for (var i = 0; i < dataValues.length; i++) {
-      console.log(i, + "  " + dataValues[i].username)
-      console.log(req.body.username)
       if (dataValues[i].username === req.body.username) {
-        console.log("IT'S A MATCH", dataValues[i]);
         var user = dataValues[i]
-        res.send(user)
-        break
+        bcrypt.compare(req.body.password, user.password, function(err, isMatch){
+          if (isMatch) {
+            res.send("welcome back", user)
+            break
+          }
+          else {
+            res.send("You done fucked up", user)
+            break
+          }
+        })
+        // var user = dataValues[i]
+        // res.send(user)
+        // break
       }
     }
     res.send("You didn't sign up ya dumb bitch")
   })
-    // bcrypt.compare(req.body.password, user.password, function(err, isMatch){
-    //   if (isMatch) {
-    //     // res.send('Welome back, ' + user.username)
-    //     res.send(user)
-    //   }
-    //   else {
-    //     // res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
-    //     res.send(user)
-    //   }
-    // })
-
 })
 
 router.get('/', function(req, res, next) {
