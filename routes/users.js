@@ -28,7 +28,7 @@ router.post('/signup', function(req, res, next) {
 })
 
 router.post('/signin', function(req, res, next){
-  ref.once('/users/').once('value', function(snapshot){
+  ref.ref('/users/').once('value', function(snapshot){
     console.log(snapshot)
     return snapshot
   })
