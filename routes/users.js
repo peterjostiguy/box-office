@@ -15,7 +15,6 @@ ref.once("value", function(snapshot) {
   console.log(snapshot.val())
 })
 var usersRef = ref.child("users")
-console.log("hmmm")
 
 router.post('/', function(req, res, next) {
   console.log("dun did it");
