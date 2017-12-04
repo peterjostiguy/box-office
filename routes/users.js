@@ -31,11 +31,13 @@ router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     var data = snapshot.val()
     data = data['users']
-    dataValues = Object.values(data)
+    var dataValues = Object.values(data)
+    var userExist = false
     var authMessage = "You didn't sign up ya dumb bitch"
     for (var i = 0; i < dataValues.length; i++) {
       console.log("compare ", dataValues[i].username, req.body.username );
       if (dataValues[i].username === req.body.username) {
+        userExist = true
         console.log("match");
         var user = dataValues[i]
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
@@ -44,10 +46,12 @@ router.post('/signin', function(req, res, next){
           if (isMatch) {
             authMessage = "welcome back" + user
             console.log("correct", authMessage)
+            res.send(authMessage)
           }
           else {
             authMessage = "You done fucked up" + user
-            console.log("wrong password", authMessage);
+            console.log("wrong password", authMessage)
+            res.send(authMessage)
           }
         })
         // var user = dataValues[i]
@@ -55,8 +59,11 @@ router.post('/signin', function(req, res, next){
         break
       }
     }
-    console.log("well, this happened")
-    res.send(authMessage)
+    if (!userExist) {
+      console.log("well, this happened")
+      res.send(authMessage)
+    }
+
   })
 })
 
