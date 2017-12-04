@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
 var users = require('./users')
 
-console.log(users);
+console.log(users.ref);
 
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount),

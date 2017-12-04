@@ -56,4 +56,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource')
 })
 
-module.exports = router, ref;
+module.exports = {
+  router : router,
+  ref: ref
+}
