@@ -39,16 +39,14 @@ router.post('/signin', function(req, res, next){
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
             res.send("welcome back", user)
-            break
           }
           else {
             res.send("You done fucked up", user)
-            break
           }
         })
         // var user = dataValues[i]
         // res.send(user)
-        // break
+        break
       }
     }
     res.send("You didn't sign up ya dumb bitch")
