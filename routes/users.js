@@ -29,15 +29,12 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
-    console.log("snapshot is ", typeof snapshot)
-    console.log(Object.keys(snapshot))
-    console.log('users is ', snapshot['users'])
-    // JSON.parse(snapshot)
-    // console.log("snapshot is ", typeof snapshot)
     return snapshot
   })
   .then(function(user){
-    console.log(user)
+    console.log("snapshot is ", typeof user)
+    console.log(Object.keys(user))
+    console.log('users is ', snapshot['users'])
     bcrypt.compare(req.body.password, user.password, function(err, isMatch){
       if (isMatch) {
         // res.send('Welome back, ' + user.username)
