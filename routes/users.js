@@ -41,7 +41,7 @@ router.post('/signin', function(req, res, next){
       }
       else {
         // res.render('index', { title: 'Box Office', message: 'Incorrect login. Contents will self destruct' })
-        res.send(user.users)
+        res.send(user)
       }
     })
   })
