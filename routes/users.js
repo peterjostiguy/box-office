@@ -19,9 +19,12 @@ ref.once("value", function(snapshot) {
 var usersRef = ref.child("users")
 
 router.post('/signup', function(req, res, next) {
-  usersRef.push().set(req.body)
-  // newUser.set(req.body)
-  res.render('index', {user: req.body.username})
+  bcrypt.hash(req.body.password, 10, function(err, hash){
+    req.body.password = hash
+    usersRef.push().set(req.body)
+  }).then(function(){
+    res.render('index', {user: req.body.username})
+  })
 })
 
 router.get('/', function(req, res, next) {
