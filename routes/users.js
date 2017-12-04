@@ -31,7 +31,7 @@ router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     data = snapshot.val()
     data = Object.values(data)
-    res.send(data.users)
+    res.send(data)
   })
   // .then(function(user){
   //   console.log("snapshot is ", typeof user)
