@@ -19,7 +19,7 @@ ref.once("value", function(snapshot) {
 var usersRef = ref.child("users")
 
 router.post('/signup', function(req, res, next) {
-  var newUser = userRef.push()
+  var newUser = usersRef.push()
   newUser.set(req.body)
   res.render('index', {user: req.body.username})
 })
