@@ -38,7 +38,8 @@ router.post('/signin', function(req, res, next){
 router.get('/', function(req, res, next) {
   ref.once('value', function(snapshot){
     var data = snapshot.val()
-    res.send(data.movies)
+    data = data.movies
+    res.render('draft', {movies: data})
   })
 })
 
