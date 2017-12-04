@@ -36,21 +36,18 @@ router.post('/signin', function(req, res, next){
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
             authMessage = "welcome back" + user.username
-            res.redirect('https://box-office-fantasy.firebaseapp.com/user.html')
-            res.send(authMessage)
+            res.render('users', user )
           }
           else {
             authMessage = "You done fucked up" + user.username
-            res.redirect('https://box-office-fantasy.firebaseapp.com/user.html')
-            res.send(authMessage)
+            res.redirect('https://box-office-fantasy.firebaseapp.com')
           }
         })
         break
       }
     }
     if (!userExist) {
-      res.redirect('https://box-office-fantasy.firebaseapp.com/user.html')
-      res.send(authMessage)
+      res.redirect('https://box-office-fantasy.firebaseapp.com')
     }
   })
 })
