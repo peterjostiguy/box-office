@@ -34,9 +34,13 @@ router.post('/signin', function(req, res, next){
     dataValues = Object.values(data)
     var authMessage = "You didn't sign up ya dumb bitch"
     for (var i = 0; i < dataValues.length; i++) {
+      console.log("compare ", dataValues[i].username, req.body.username );
       if (dataValues[i].username === req.body.username) {
+        console.log("match");
         var user = dataValues[i]
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
+          console.log("BCRYPTIN", isMatch)
+
           if (isMatch) {
             authMessage = "welcome back" + user
             console.log("correct", authMessage)
