@@ -29,10 +29,11 @@ router.post('/signup', function(req, res, next) {
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
-    console.log("snapshot is ", typeof snapshot)
-    console.log(Object.keys(snapshot))
-    console.log('users is ', snapshot['users'])
-    return snapshot.val()
+    data = snapshot.val()
+    console.log("snapshot is ", typeof data)
+    console.log(Object.keys(data))
+    console.log('users is ', data['users'])
+    return data
   })
   .then(function(user){
     console.log("snapshot is ", typeof user)
