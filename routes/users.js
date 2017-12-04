@@ -22,9 +22,8 @@ router.post('/signup', function(req, res, next) {
   bcrypt.hash(req.body.password, 10, function(err, hash){
     req.body.password = hash
     usersRef.push().set(req.body)
-  }).then(function(){
-    res.render('index', {user: req.body.username})
   })
+  res.render('index', {user: req.body.username})
 })
 
 router.get('/', function(req, res, next) {
