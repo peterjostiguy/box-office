@@ -3,9 +3,9 @@ var router = express.Router()
 var admin = require('firebase-admin')
 var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
-var users = require('./users')
+var ref = require('./firebase.js')
 
-console.log(users.ref);
+console.log(ref)
 
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount),

@@ -3,14 +3,15 @@ var router = express.Router()
 var admin = require('firebase-admin')
 var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
+var ref = require('./firebase')
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://box-office-fantasy.firebaseio.com/"
-})
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://box-office-fantasy.firebaseio.com/"
+// })
 
-var db = admin.database()
-var ref = db.ref()
+// var db = admin.database()
+// var ref = db.ref()
 var usersRef = ref.child("users")
 
 router.post('/signup', function(req, res, next) {
@@ -56,7 +57,4 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource')
 })
 
-module.exports = {
-  router : router,
-  ref: ref
-}
+module.exports = router
