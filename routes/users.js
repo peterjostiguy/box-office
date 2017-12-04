@@ -28,7 +28,6 @@ router.post('/signup', function(req, res, next) {
 })
 
 router.post('/signin', function(req, res, next){
-  return knex('my_user').insert({agentName: agentName, password: password}, "password")
   ref.once('/users/').once('value', function(snapshot){
     console.log(snapshot)
     return snapshot
