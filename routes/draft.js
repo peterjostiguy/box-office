@@ -3,7 +3,7 @@ var router = express.Router()
 var admin = require('firebase-admin')
 var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
-var users = require('./routes/users')
+var users = require('./users')
 
 console.log(users);
 
