@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
-var admin = require("firebase-admin")
+var admin = require('firebase-admin')
+var bcrypt = require('bcrypt')
 
 var serviceAccount = require("../firebase-boxoffice.json")
 
@@ -17,9 +18,10 @@ ref.once("value", function(snapshot) {
 })
 var usersRef = ref.child("users")
 
-router.post('/', function(req, res, next) {
+router.post('/signup', function(req, res, next) {
   console.log(req.body)
-  res.render('index', {title: "Auth"})
+  usersRef.set(req.body)
+  res.render('index', {user: req.body.username})
 })
 
 router.get('/', function(req, res, next) {
