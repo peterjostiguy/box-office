@@ -29,15 +29,17 @@ router.post('/signin', function(req, res, next){
         var user = dataValues[i]
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
+            console.log("begin isMatch")
             var userCode = dataKeys[i]
             var authMessage = "Welcome back " + user.username
             res.cookie('userCode', userCode)
             res.cookie('isAdmin', user.isAdmin)
-            next()
+            console.log("middleIsMatch")
             var url = '/users?user=' + userCode
             res.redirect(url)
           }
           else {
+            console.log("wrong password")
             res.render('index', {message: 'Wrong Password Dum Dum'})
           }
         })
@@ -45,6 +47,7 @@ router.post('/signin', function(req, res, next){
       }
     }
     if (!userExist) {
+      console.log("!user doesn't")
       res.render('index', {message: "User Doesn't Exist"})
     }
   })
