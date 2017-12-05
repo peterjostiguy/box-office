@@ -46,3 +46,11 @@ header {
 .draft-movie {
   margin: 0 1vw;
 }
+
+.draft-release-date {
+  display: flex;
+}
+
+#start-button {
+  display: none;
+}

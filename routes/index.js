@@ -153,7 +153,7 @@ async.series([
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send("Hi")
+  res.render('index', {message: "Sign In Below"})
 })
 
 router.post('/', function(req, res, next) {

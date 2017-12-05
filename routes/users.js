@@ -5,13 +5,6 @@ var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
 var ref = require('./firebase')
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://box-office-fantasy.firebaseio.com/"
-// })
-
-// var db = admin.database()
-// var ref = db.ref()
 var usersRef = ref.child("users")
 
 router.post('/signup', function(req, res, next) {
@@ -27,34 +20,44 @@ router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
     var data = snapshot.val()
     data = data['users']
+    dataKeys = Object.keys(data)
     var dataValues = Object.values(data)
     var userExist = false
-    var authMessage = "You didn't sign up ya dumb bitch"
     for (var i = 0; i < dataValues.length; i++) {
       if (dataValues[i].username === req.body.username) {
         userExist = true
         var user = dataValues[i]
         bcrypt.compare(req.body.password, user.password, function(err, isMatch){
           if (isMatch) {
-            authMessage = "welcome back" + user.username
-            res.render('users', {user: user} )
+            var userCode = dataKeys[i]
+            var authMessage = "Welcome back " + user.username
+            res.cookie('userCode', userCode)
+            next()
+            res.cookie('isAdmin', user.isAdmin)
+            // next()
+            var url = '/users?user=' + userCode
+            res.redirect(url)
           }
           else {
-            authMessage = "You done fucked up" + user.username
-            res.redirect('https://box-office-fantasy.firebaseapp.com')
+            res.render('index', {message: 'Wrong Password Dum Dum'})
           }
         })
         break
       }
     }
     if (!userExist) {
-      res.redirect('https://box-office-fantasy.firebaseapp.com')
+      res.render('index', {message: "User Doesn't Exist"})
     }
   })
 })
 
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource')
+  if (req.cookies.userCode) {
+    res.render('users')
+  }
+  else {
+    res.redirect('/')
+  }
 })
 
 module.exports = router
