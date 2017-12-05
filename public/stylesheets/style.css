@@ -1,8 +1,48 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+header {
+  background-color: grey;
 }
 
-a {
-  color: #00B7FF;
+.owners {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.owner {
+  padding-bottom: 2vh;
+  border: 1px solid black;
+  margin: 2vw;
+  width: 18vw;
+}
+
+.owner-name {
+  margin-left: 1vw;
+  border-bottom: 1px black solid;
+}
+
+.movies {
+  height: 35vh;
+  overflow-y: scroll;
+}
+
+.movie {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  font-weight: bold;
+  width: 5vw;
+}
+
+
+.all-movies {
+  width: 80vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.draft-movie {
+  margin: 0 1vw;
 }
