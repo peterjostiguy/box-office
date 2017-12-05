@@ -17,9 +17,40 @@ var currentBidTitle
 var currentBidReleaseDate
 var currentBid
 var draftIsActive
-var currentUser = document.cookie.slice(9)
-var currentUserIsAdmin = document.cookie.slice((document.cookie.length - 4))
+var currentUser
 
+// var timeleft = 10
+
+
+for (var i = 0; i < document.cookie.length; i++) {
+  if (document.cookie[i] === '=' && document.cookie[i-1] === 'e'){
+    var beginSlice = (i+1)
+  }
+  else if (document.cookie[i] === ';' && beginSlice) {
+    var endSlice = i
+    currentUser = document.cookie.slice(beginSlice, endSlice)
+    break
+  }
+  else if (i === document.cookie.length - 1){
+    var endSlice = document.cookie.length
+  }
+  currentUser = document.cookie.slice(beginSlice, endSlice)
+}
+
+for (var i = 0; i < document.cookie.length; i++) {
+  if (document.cookie[i-1] === 'n'){
+    var beginAdminSlice = (i+1)
+  }
+  else if (document.cookie[i] === ';' && beginAdminSlice) {
+    var endAdminSlice = i
+    currentUserIsAdmin = document.cookie.slice(beginAdminSlice, endAdminSlice)
+    break
+  }
+  else if (i === document.cookie.length - 1){
+    var endAdminSlice = document.cookie.length
+  }
+  currentUserIsAdmin = document.cookie.slice(beginAdminSlice, endAdminSlice)
+}
 
 ref.once('value')
 .then(function(snapshot){
@@ -38,12 +69,27 @@ draftIsActiveDB.on('value', function(snapshot) {
     }
   }
   else {
-    console.log("SHIT SHOULD CHANGE");
     theWholeDamnPage.style.display = 'inline'
     waitingMessage.style.display = 'none'
     startButton.style.display = 'none'
   }
 })
+
+// var timerDB = firebase.database().ref('currentTimer')
+// timerDB.on('value', function(snapshot) {
+//   var timeleftDB = snapshot.val().timeLeft
+//   console.log(timeleftDB)
+//   document.getElementById('countdown-timer').innerHTML = timeleft
+//   if (timeleftDB <= 0) {
+//     document.getElementById('countdown-timer').innerHTML = "Gone"
+//   }
+//   else if (timeleftDB <= 3) {
+//     document.getElementById('countdown-timer').innerHTML = "GOING..."
+//   }
+//   else if (timeleftDB <= 5){
+//     document.getElementById('countdown-timer').innerHTML = "Going..."
+//   }
+// })
 
 
 //Remove movies from display if (!owner)
@@ -75,7 +121,6 @@ currentBidDB.on('value', function(snapshot) {
 //Add event listeners
 
 startButton.addEventListener('click', function(){
-  console.log("clicked")
   firebase.database().ref('/draft').set({
     isActive: true
   })
@@ -99,6 +144,21 @@ for (var i = 0; i < bidButtons.length; i++) {
 function selectMovie(){
   currentBidTitle = this.childNodes[3].innerHTML
   currentBidReleaseDate = this.childNodes[1].childNodes[3].innerHTML
+  // timeleft = 10
+  for (var i = 0; i < bidButtons.length; i++) {
+    bidButtons[i].style.display = 'inline'
+  }
+  // var bidTimer = setInterval(function(){
+  //   console.log(timeleft)
+  //   timeleft --
+  //   firebase.database().ref('currentTimer/').set({
+  //     timeLeft: timeleft
+  //   })
+  //   if (timeleft <= 0) {
+  //     clearInterval(bidTimer)
+  //     endBidding()
+  //   }
+  // }, 1000)
   resetBid()
 }
 
@@ -111,14 +171,13 @@ function resetBid(){
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
+  // timeleft = 10
+  // console.log(timeleft)
   updateCurrentBid()
 }
 
 function updateCurrentBid(){
-  console.log(currentBidTitle)
-  console.log(currentBidReleaseDate)
-  var currentBidder = document.cookie.slice(9)
-
+  var currentBidder = currentUser
   firebase.database().ref('currentBidder/').set({
     username: currentBidder,
     currentBid: currentBid,
@@ -128,6 +187,8 @@ function updateCurrentBid(){
 }
 
 function endBidding(){
+  
+  console.log("end bid");
   ref.once('value')
   .then(function(snapshot){
     var winningBidder = snapshot.val().currentBidder
@@ -141,5 +202,4 @@ function endBidding(){
       boughtFor: currentBid
     })
   })
-
 }
