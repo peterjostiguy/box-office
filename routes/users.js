@@ -32,7 +32,6 @@ router.post('/signin', function(req, res, next){
             var userCode = dataKeys[i]
             var authMessage = "Welcome back " + user.username
             res.cookie('userCode', userCode)
-            next()
             res.cookie('isAdmin', user.isAdmin)
             next()
             var url = '/users?user=' + userCode
