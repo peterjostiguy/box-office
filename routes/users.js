@@ -34,7 +34,7 @@ router.post('/signin', function(req, res, next){
             res.cookie('userCode', userCode)
             next()
             res.cookie('isAdmin', user.isAdmin)
-            // next()
+            next()
             var url = '/users?user=' + userCode
             res.redirect(url)
           }
