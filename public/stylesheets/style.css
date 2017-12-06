@@ -54,3 +54,7 @@ header {
 #start-button {
   display: none;
 }
+
+#end-bid-button {
+  display: none
+}
