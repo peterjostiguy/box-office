@@ -21,7 +21,7 @@ var draftIsActive
 var currentUser
 var currentUserIndex = 0
 var nextUser
-// var timeleft = 10
+var timeleft = 10
 
 
 
@@ -89,21 +89,21 @@ draftIsActiveDB.on('value', function(snapshot) {
   }
 })
 
-// var timerDB = firebase.database().ref('currentTimer')
-// timerDB.on('value', function(snapshot) {
-//   var timeleftDB = snapshot.val().timeLeft
-//   console.log(timeleftDB)
-//   document.getElementById('countdown-timer').innerHTML = timeleft
-//   if (timeleftDB <= 0) {
-//     document.getElementById('countdown-timer').innerHTML = "Gone"
-//   }
-//   else if (timeleftDB <= 3) {
-//     document.getElementById('countdown-timer').innerHTML = "GOING..."
-//   }
-//   else if (timeleftDB <= 5){
-//     document.getElementById('countdown-timer').innerHTML = "Going..."
-//   }
-// })
+var timerDB = firebase.database().ref('currentTimer')
+timerDB.on('value', function(snapshot) {
+  var timeleftDB = snapshot.val().timeLeft
+  console.log(timeleftDB)
+  document.getElementById('countdown-timer').innerHTML = timeleft
+  if (timeleftDB <= 0) {
+    document.getElementById('countdown-timer').innerHTML = "Gone"
+  }
+  else if (timeleftDB <= 3) {
+    document.getElementById('countdown-timer').innerHTML = "GOING..."
+  }
+  else if (timeleftDB <= 5){
+    document.getElementById('countdown-timer').innerHTML = "Going..."
+  }
+})
 
 
 //Remove movies from display if (!owner)
@@ -173,17 +173,17 @@ function selectMovie(){
   for (var i = 0; i < bidButtons.length; i++) {
     bidButtons[i].style.display = 'inline'
   }
-  // var bidTimer = setInterval(function(){
-  //   console.log(timeleft)
-  //   timeleft --
-  //   firebase.database().ref('currentTimer/').set({
-  //     timeLeft: timeleft
-  //   })
-  //   if (timeleft <= 0) {
-  //     clearInterval(bidTimer)
-  //     endBidding()
-  //   }
-  // }, 1000)
+  var bidTimer = setInterval(function(){
+    console.log(timeleft)
+    timeleft --
+    firebase.database().ref('currentTimer/').set({
+      timeLeft: timeleft
+    })
+    if (timeleft <= 0) {
+      clearInterval(bidTimer)
+      endBidding()
+    }
+  }, 1000)
   this.remove()
   resetBid()
 }
@@ -197,8 +197,8 @@ function resetBid(){
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
-  // timeleft = 10
-  // console.log(timeleft)
+  timeleft = 10
+  console.log(timeleft)
   updateCurrentBid()
 }
 
