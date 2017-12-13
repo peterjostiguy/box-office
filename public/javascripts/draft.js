@@ -10,8 +10,11 @@ var theWholeDamnPage = document.getElementById('the-whole-damn-page')
 var waitingMessage = document.getElementById('waiting-message')
 var startButton = document.getElementById('start-button')
 var nextUserElement = document.getElementById('next-user')
+var dollarsLeftElement = document.getElementById('current-user-dollars')
+var allMoviesDiv = document.getElementById('all-movies')
+var allUserTotalDiv = document.getElementById('all-user-total')
 
-//Globar Variables
+//Global Variables
 var movieDatabase
 var userDatabase
 var currentBidTitle
@@ -19,9 +22,8 @@ var currentBidReleaseDate
 var currentBid
 var draftIsActive
 var currentUser
-var currentUserIndex = 0
 var nextUser
-var timeleft = 10
+
 
 
 
@@ -62,6 +64,18 @@ if (currentUserIsAdmin === "true") {
 ref.once('value')
 .then(function(snapshot){
   movieDatabase = snapshot.val().movies
+  updatedMovieDB = []
+  for (var movie in movieDatabase) {
+    if (movieDatabase.hasOwnProperty(movie)) {
+      updatedMovieDB.push(movieDatabase[movie])
+    }
+  }
+  updatedUnownedMovieDB = updatedMovieDB.filter(function(movie){
+    return !movie.owner
+  })
+  updatedOwnedMovies = updatedMovieDB.filter(function(movie){
+    return movie.owner
+  })
   userDatabase = snapshot.val().users
   userKeyArray = []
   for (var userKey in userDatabase) {
@@ -69,8 +83,73 @@ ref.once('value')
       userKeyArray.push(userKey)
     }
   }
-  console.log(userKeyArray);
 })
+
+function updateUserTotalHTML(userObject){
+  while (allUserTotalDiv.firstChild) {
+    allUserTotalDiv.removeChild(allUserTotalDiv.firstChild);
+}
+  for (var i = 0; i < userKeyArray.length; i++) {
+    var userTotalDiv = document.createElement('div')
+    userTotalDiv.classList.add('user-total')
+    var userTotalName = document.createElement('h4')
+    userTotalName.innerHTML = userDatabase[userKeyArray[i]].username
+    userTotalDiv.appendChild(userTotalName)
+    userTotalDiv.style.margin = ''
+    var userTotalTotal = document.createElement('p')
+    userTotalTotal.innerHTML = userObject[userKeyArray[i]].dollarsLeft
+    userTotalDiv.appendChild(userTotalTotal)
+    allUserTotalDiv.appendChild(userTotalDiv)
+    var userMovieList = document.createElement('div')
+    userMovieList.classList.add('user-movie-list')
+    for (var j = 0; j < updatedOwnedMovies.length; j++) {
+      if (updatedOwnedMovies[j].owner === userKeyArray[i]) {
+        var movieHTMLToAdd = document.createElement('p')
+        movieHTMLToAdd.innerHTML = updatedOwnedMovies[j].title
+        userMovieList.appendChild(movieHTMLToAdd)
+      }
+    }
+    userTotalDiv.appendChild(userMovieList)
+  }
+}
+
+function updateMovieHTML(moviesArray){
+  while (allMoviesDiv.firstChild) {
+    allMoviesDiv.removeChild(allMoviesDiv.firstChild);
+}
+  for (var i = 0; i < moviesArray.length; i++) {
+    var movieDiv = document.createElement('div')
+    movieDiv.classList.add('draft-movie')
+    movieDiv.addEventListener('click', selectMovie)
+    var movieTitle = document.createElement('h4')
+    movieTitle.innerHTML = moviesArray[i].title
+    movieDiv.appendChild(movieTitle)
+    var movieReleaseDate = document.createElement('p')
+    movieReleaseDate.innerHTML = moviesArray[i].releaseDate
+    movieDiv.appendChild(movieReleaseDate)
+    allMoviesDiv.appendChild(movieDiv)
+  }
+}
+
+function updateMovieList(){
+  ref.once('value')
+  .then(function(snapshot){
+    movieDatabase = snapshot.val().movies
+    updatedMovieDB = []
+    for (var movie in movieDatabase) {
+      if (movieDatabase.hasOwnProperty(movie)) {
+        updatedMovieDB.push(movieDatabase[movie])
+      }
+    }
+    updatedUnownedMovieDB = updatedMovieDB.filter(function(movie){
+      return !movie.owner
+    })
+    updatedOwnedMovies = updatedMovieDB.filter(function(movie){
+      return movie.owner
+    })
+    updateMovieHTML(updatedUnownedMovieDB)
+  })
+}
 
 var draftIsActiveDB = firebase.database().ref('draft')
 draftIsActiveDB.on('value', function(snapshot) {
@@ -86,41 +165,24 @@ draftIsActiveDB.on('value', function(snapshot) {
     theWholeDamnPage.style.display = 'inline'
     waitingMessage.style.display = 'none'
     startButton.style.display = 'none'
+    draftIsActiveDB.once('value')
+    .then(function(snapshot){
+      var currentDraftInfo = snapshot.val()
+      dollarsLeftElement.innerHTML = currentDraftInfo.users[currentUser].dollarsLeft
+      updateUserTotalHTML(snapshot.val().users)
+    })
   }
 })
-
-var timerDB = firebase.database().ref('currentTimer')
-timerDB.on('value', function(snapshot) {
-  var timeleftDB = snapshot.val().timeLeft
-  console.log(timeleftDB)
-  document.getElementById('countdown-timer').innerHTML = timeleft
-  if (timeleftDB <= 0) {
-    document.getElementById('countdown-timer').innerHTML = "Gone"
-  }
-  else if (timeleftDB <= 3) {
-    document.getElementById('countdown-timer').innerHTML = "GOING..."
-  }
-  else if (timeleftDB <= 5){
-    document.getElementById('countdown-timer').innerHTML = "Going..."
-  }
-})
-
-
-//Remove movies from display if (!owner)
-//which means displaying movies from DB, instead of sheet
-
-//Have to delete CurrentBidder from DB before draft starts
 
 
 //endBidding on a timer instead of a button?
-
-//subtract bid amount from user total
-//display all users totals
+//movie poster?
 
 var currentBidDB = firebase.database().ref('currentBidder')
 currentBidDB.on('value', function(snapshot) {
   var currentBidStatus = snapshot.val()
   if (currentBidStatus) {
+    currentUserIndex = currentBidStatus.currentUserIndex
     currentBidTitle = currentBidStatus.title
     currentTitle.innerHTML = "Current Movie:    " + currentBidTitle
     currentBidReleaseDate = currentBidStatus.releaseDate
@@ -139,24 +201,62 @@ currentBidDB.on('value', function(snapshot) {
   else {
     nextUserElement.innerHTML = ""
   }
+  if (currentBidStatus.title) {
+    console.log("got a title!", bidButtons[0].style)
+    for (var i = 0; i < bidButtons.length; i++) {
+      bidButtons[i].style.display = 'inline'
+    }
+  }
+  else {
+    console.log("no title", bidButtons)
+    for (var i = 0; i < bidButtons.length; i++) {
+      bidButtons[i].style.display = 'none'
+    }
+  }
 })
 
+var nextBidderDB = firebase.database().ref('currentBidder/next')
+nextBidderDB.on('value', function(snapshot) {
+  var nextSelector = snapshot.val()
+  var allMovies = document.getElementById('all-movies')
+  if (currentUser === nextSelector) {
+    updateMovieList()
+    allMovies.style.display = 'flex'
+    allMovies.style['flex-wrap'] = 'wrap'
+  }
+  else {
+    allMovies.style.display = 'none'
+  }
+})
 //Add event listeners
 
 startButton.addEventListener('click', function(){
+  updateMovieHTML(updatedUnownedMovieDB)
+  var userObject = {}
+  for (var i = 0; i < userKeyArray.length; i++) {
+    userObject[userKeyArray[i]] = {
+      dollarsLeft: 200
+    }
+  }
   firebase.database().ref('/draft').set({
-    isActive: true
+    isActive: true,
+    users: userObject
   })
+  currentUserIndex = 0
   nextUser = userDatabase[userKeyArray[currentUserIndex]].username
+  firebase.database().ref('currentBidder/').set({
+    username: "",
+    currentBid: "",
+    title: "",
+    releaseDate: "",
+    next: userKeyArray[currentUserIndex],
+    currentUserIndex: currentUserIndex
+  })
 })
 
 endBiddingButton.addEventListener('click', function(){
   endBidding()
 })
-
-for (var i = 0; i < movies.length; i++) {
-  movies[i].addEventListener('click', selectMovie)
-}
 
 for (var i = 0; i < bidButtons.length; i++) {
   bidButtons[i].addEventListener('click', function(){
@@ -166,81 +266,78 @@ for (var i = 0; i < bidButtons.length; i++) {
 
 //functions
 function selectMovie(){
-
-  currentBidTitle = this.childNodes[3].innerHTML
-  currentBidReleaseDate = this.childNodes[1].childNodes[3].innerHTML
-  // timeleft = 10
+  currentBidTitle = this.childNodes[0].innerHTML
+  currentBidReleaseDate = this.childNodes[1].innerHTML
   for (var i = 0; i < bidButtons.length; i++) {
     bidButtons[i].style.display = 'inline'
   }
-  var bidTimer = setInterval(function(){
-    console.log(timeleft)
-    timeleft --
-    firebase.database().ref('currentTimer/').set({
-      timeLeft: timeleft
-    })
-    if (timeleft <= 0) {
-      clearInterval(bidTimer)
-      endBidding()
-    }
-  }, 1000)
-  this.remove()
   resetBid()
 }
 
 function resetBid(){
-  var startingBid = prompt('whatchu want to bid?')
-  currentBid = Number(startingBid)
-  updateCurrentBid()
+  ref.once('value')
+  .then(function(snapshot){
+    currentUserIndex = snapshot.val().currentBidder.currentUserIndex
+  })
+  currentBid = prompt('whatchu want to bid?')
+  updateCurrentBid(currentBid)
 }
 
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
-  timeleft = 10
-  console.log(timeleft)
-  updateCurrentBid()
+  updateCurrentBid(currentBid)
 }
 
-function updateCurrentBid(){
+function updateCurrentBid(mostRecentNumber){
   var currentBidder = currentUser
   firebase.database().ref('currentBidder/').set({
     username: currentBidder,
-    currentBid: currentBid,
+    currentBid: mostRecentNumber,
     title: currentBidTitle,
     releaseDate: currentBidReleaseDate,
-    next: ""
+    next: "",
+    currentUserIndex: currentUserIndex
   })
 }
 
 function endBidding(){
-  currentUserIndex ++
-  if (currentUserIndex >= userKeyArray.length) {
-    currentUserIndex = 0
-  }
   ref.once('value')
   .then(function(snapshot){
     var winningBidder = snapshot.val().currentBidder
     return winningBidder
+    currentUserIndex = snapshot.val().currentBidder.currentUserIndex
   })
   .then(function(winningBid){
     firebase.database().ref('movies/' + currentBidTitle).set({
       title: currentBidTitle,
       releaseDate: movieDatabase[currentBidTitle].releaseDate,
       owner: winningBid.username,
-      boughtFor: currentBid
+      boughtFor: winningBid.currentBid
+    })
+    currentUserIndex ++
+    if (currentUserIndex >= userKeyArray.length) {
+      currentUserIndex = 0
+    }
+    firebase.database().ref('/draft/users/' + winningBid.username).once('value')
+    .then(function(snapshot){
+      return snapshot.val().dollarsLeft
+    }).then(function(winningBidderStatus){
+      firebase.database().ref('/draft/users/' + winningBid.username).set({
+        dollarsLeft: winningBidderStatus - winningBid.currentBid
+      })
     })
     firebase.database().ref('currentBidder/').set({
       username: "",
       currentBid: "",
       title: "",
       releaseDate: "",
-      next: userKeyArray[currentUserIndex]
+      next: userKeyArray[currentUserIndex],
+      currentUserIndex: currentUserIndex
     })
     ref.once('value')
     .then(function(snapshot){
-      var nextSelecter = snapshot.val().currentBidder
-      console.log("next", nextSelecter.next, userDatabase[nextSelecter.next].username)
+      var nextSelector = snapshot.val().currentBidder
     })
   })
 }

@@ -1,6 +1,5 @@
 <div id="the-whole-damn-page">
   <div id="current-movie">
-    <p>Current Bidding:</p>
     <div class="draft-movie" id="current-movie-bid">
       <div class="draft-release-date">
         <h3>Release Date:</h3>
@@ -9,25 +8,25 @@
       <h3 id='current-title'></h3>
       <h2 id='current-bid'></h2>
       <h2 id='current-bidder'></h2>
+      <p id="next-user"></p>
     </div>
-    <p id='countdown-timer'></p>
-    <p id="next-user"></p>
-    <button type="button" name="button" class='bid-button' id='1'>+1</button>
-    <button type="button" name="button" class='bid-button' id='5'>+5</button>
-    <button type="button" name="button" id="end-bid-button">End Bidding</button>
-
+    <div class="second-container">
+      <div id='monies-left' class='draft-movie'>
+        <p>Monies Left:</p>
+        <p id='current-user-dollars'></p>
+      </div>
+      <div class="buttons">
+        <button type="button" name="button" class='bid-button' id='1'>+1</button>
+        <button type="button" name="button" class='bid-button' id='5'>+5</button>
+        <button type="button" name="button" id="end-bid-button">End Bidding</button>
+      </div>
+    </div>
   </div>
 
-  <div class="all-movies">
-    {{#each movies}}
-      <div class="draft-movie">
-        <div class="draft-release-date">
-          <h4>Release Date:</h4>
-          <p>{{releaseDate}}</p>
-        </div>
-        <h4>{{title}}</h4>
-      </div>
-    {{/each}}
+  <div id='all-user-total'>
+  </div>
+
+  <div id="all-movies">
   </div>
 </div>
 
