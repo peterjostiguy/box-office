@@ -202,13 +202,11 @@ currentBidDB.on('value', function(snapshot) {
     nextUserElement.innerHTML = ""
   }
   if (currentBidStatus.title) {
-    console.log("got a title!", bidButtons[0].style)
     for (var i = 0; i < bidButtons.length; i++) {
       bidButtons[i].style.display = 'inline'
     }
   }
   else {
-    console.log("no title", bidButtons)
     for (var i = 0; i < bidButtons.length; i++) {
       bidButtons[i].style.display = 'none'
     }
