@@ -278,13 +278,23 @@ function resetBid(){
     currentUserIndex = snapshot.val().currentBidder.currentUserIndex
   })
   currentBid = prompt('whatchu want to bid?')
-  updateCurrentBid(currentBid)
+  if (Number(currentBid) > Number(dollarsLeftElement.innerHTML)) {
+    currentBid = prompt('Nice try you broke bitch')
+  }
+  else {
+    updateCurrentBid(currentBid)
+  }
 }
 
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
-  updateCurrentBid(currentBid)
+  if (Number(dollarsLeftElement.innerHTML) >= Number(currentBid)) {
+    updateCurrentBid(currentBid)
+  }
+  else {
+    alert('Ya broke, bitch!')
+  }
 }
 
 function updateCurrentBid(mostRecentNumber){
