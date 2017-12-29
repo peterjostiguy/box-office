@@ -231,8 +231,6 @@ currentBidDB.on('value', function(snapshot) {
     nextUserElement.innerHTML = ""
   }
   var moviesOwned = moviesOwnedElement.innerHTML.slice(moviesOwnedElement.innerHTML.length - 2)
-  console.log(Number(moviesOwned))
-  console.log(Number(moviesOwned) < 10)
   if (currentBidStatus.title && Number(moviesOwned) < 10 ) {
     for (var i = 0; i < bidButtons.length; i++) {
       bidButtons[i].style.display = 'inline'
