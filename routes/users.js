@@ -4,8 +4,14 @@ var admin = require('firebase-admin')
 var bcrypt = require('bcrypt')
 var serviceAccount = require("../firebase-boxoffice.json")
 var ref = require('./firebase')
+var GoogleSpreadsheet = require('google-spreadsheet')
+var async = require('async')
+
+var doc = new GoogleSpreadsheet('1L9DhmZlw1yNtk0O4mV0vTdEf92mz63AjTaN8_4BxmpU')
+var sheet
 
 var usersRef = ref.child("users")
+var moviesRef = ref.child("movies")
 
 router.post('/signup', function(req, res, next) {
   // This doesn't protect against duplicates
@@ -15,6 +21,34 @@ router.post('/signup', function(req, res, next) {
   })
   res.render('index', {user: req.body.username})
 })
+
+// async.series([
+//   function setAuth(step) {
+//     var creds = require('../google-generated-creds.json')
+//     doc.useServiceAccountAuth(creds, step);
+//   },
+//   function getInfoAndWorksheets(step) {
+//     doc.getInfo(function(err, info) {
+//       sheet = info.worksheets[8]
+//       step()
+//     })
+//   },
+//   function workingWithCells(step){
+//     sheet.getCells({
+//       'min-row': 2,
+//       'max-row': 125,
+//       'max-col': 4,
+//       'return-empty': true
+//     }, function(err, cells) {
+//       console.log("DID SOMETHING")
+//       for (var i = 0; i < cells.length; i++) {
+//         cells[i].value = "New"
+//         cells[i].save()
+//       }
+//       step()
+//     })
+//   }
+// ])
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
@@ -58,6 +92,55 @@ router.get('/', function(req, res, next) {
   else {
     res.redirect('/')
   }
+})
+
+router.get('/donezo', function(req, res, next){
+  moviesRef.once('value', function(snapshot){
+    movieDatabase = snapshot.val()
+    movieDB = []
+    for (var movie in movieDatabase) {
+      if (movieDatabase.hasOwnProperty(movie)) {
+        movieDB.push(movieDatabase[movie])
+      }
+    }
+    async.series([
+      function setAuth(step) {
+        var creds = require('../google-generated-creds.json')
+        doc.useServiceAccountAuth(creds, step);
+      },
+      function getInfoAndWorksheets(step) {
+        doc.getInfo(function(err, info) {
+          sheet = info.worksheets[8]
+          step()
+        })
+      },
+      function workingWithCells(step){
+        sheet.getCells({
+          'min-row': 2,
+          'max-row': movieDB.length+1,
+          'max-col': 3,
+          'return-empty': true
+        }, function(err, cells) {
+          //change i to row*3 to populate lower bits
+          for (var i = 0; i < cells.length; i++) {
+            currentMovie = movieDB[Math.floor(i/3)]
+            if (i%3 === 0) {
+              cells[i].value = currentMovie.owner
+            }
+            else if (i%3 === 1) {
+              cells[i].value = currentMovie.title
+            }
+            else if (i%3 === 2){
+              cells[i].value = currentMovie.boughtFor
+            }
+            cells[i].save()
+          }
+          step()
+        })
+      }
+    ])
+  })
+  res.render('done')
 })
 
 module.exports = router

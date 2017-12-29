@@ -11,6 +11,7 @@ var waitingMessage = document.getElementById('waiting-message')
 var startButton = document.getElementById('start-button')
 var nextUserElement = document.getElementById('next-user')
 var dollarsLeftElement = document.getElementById('current-user-dollars')
+var moviesOwnedElement = document.getElementById('current-user-movies-owned')
 var allMoviesDiv = document.getElementById('all-movies')
 var allUserTotalDiv = document.getElementById('all-user-total')
 
@@ -24,7 +25,8 @@ var draftIsActive
 var currentUser
 var nextUser
 
-
+//endBidding on a timer instead of a button?
+//movie poster?
 
 
 for (var i = 0; i < document.cookie.length; i++) {
@@ -154,6 +156,7 @@ function updateMovieList(){
 var draftIsActiveDB = firebase.database().ref('draft')
 draftIsActiveDB.on('value', function(snapshot) {
   draftIsActive = snapshot.val().isActive
+  draftIsOver = snapshot.val().isOver
   if (!draftIsActive) {
     theWholeDamnPage.style.display = 'none'
     waitingMessage.style.display = 'default'
@@ -169,14 +172,40 @@ draftIsActiveDB.on('value', function(snapshot) {
     .then(function(snapshot){
       var currentDraftInfo = snapshot.val()
       dollarsLeftElement.innerHTML = currentDraftInfo.users[currentUser].dollarsLeft
+      moviesOwnedElement.innerHTML = "Movies Owned: " + currentDraftInfo.users[currentUser].moviesOwned
+      //Can remove bid buttons
+      if (currentDraftInfo.users[currentUser].moviesOwned >= 10) {
+        for (var i = 0; i < bidButtons.length; i++) {
+          bidButtons[i].style.display = 'none'
+        }
+      }
       updateUserTotalHTML(snapshot.val().users)
     })
   }
+  if (draftIsOver) {
+    window.location.replace("users/donezo")
+  }
 })
 
-
-//endBidding on a timer instead of a button?
-//movie poster?
+function checkIfActive(){
+  firebase.database().ref('/draft/users/' + userKeyArray[currentUserIndex]).once('value')
+  .then(function(snapshot){
+    if (snapshot.val().dollarsLeft <= 0 || snapshot.val().moviesOwned >= 10) {
+      currentUserIndex ++
+      if (currentUserIndex >= userKeyArray.length) {
+        currentUserIndex = 0
+      }
+      counter ++
+      if (counter > userKeyArray.length) {
+        firebase.database().ref('/draft/isActive').set(false)
+        firebase.database().ref('/draft/isOver').set(true)
+      }
+      else {
+        checkIfActive()
+      }
+    }
+  })
+}
 
 var currentBidDB = firebase.database().ref('currentBidder')
 currentBidDB.on('value', function(snapshot) {
@@ -201,7 +230,10 @@ currentBidDB.on('value', function(snapshot) {
   else {
     nextUserElement.innerHTML = ""
   }
-  if (currentBidStatus.title) {
+  var moviesOwned = moviesOwnedElement.innerHTML.slice(moviesOwnedElement.innerHTML.length - 2)
+  console.log(Number(moviesOwned))
+  console.log(Number(moviesOwned) < 10)
+  if (currentBidStatus.title && Number(moviesOwned) < 10 ) {
     for (var i = 0; i < bidButtons.length; i++) {
       bidButtons[i].style.display = 'inline'
     }
@@ -233,11 +265,13 @@ startButton.addEventListener('click', function(){
   var userObject = {}
   for (var i = 0; i < userKeyArray.length; i++) {
     userObject[userKeyArray[i]] = {
-      dollarsLeft: 200
+      dollarsLeft: 200,
+      moviesOwned: 0
     }
   }
   firebase.database().ref('/draft').set({
     isActive: true,
+    isOver: false,
     users: userObject
   })
   currentUserIndex = 0
@@ -263,6 +297,8 @@ for (var i = 0; i < bidButtons.length; i++) {
 }
 
 //functions
+
+//I don't think selectMovie() is necessary- just call resetBid
 function selectMovie(){
   currentBidTitle = this.childNodes[0].innerHTML
   currentBidReleaseDate = this.childNodes[1].innerHTML
@@ -278,22 +314,27 @@ function resetBid(){
     currentUserIndex = snapshot.val().currentBidder.currentUserIndex
   })
   currentBid = prompt('whatchu want to bid?')
-  if (Number(currentBid) > Number(dollarsLeftElement.innerHTML)) {
-    currentBid = prompt('Nice try you broke bitch')
-  }
-  else {
-    updateCurrentBid(currentBid)
+  if (currentBid){
+    if (Number(currentBid) > Number(dollarsLeftElement.innerHTML)) {
+      currentBid = prompt('Nice try you broke bitch')
+    }
+    else {
+      updateCurrentBid(currentBid)
+    }
   }
 }
 
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
-  if (Number(dollarsLeftElement.innerHTML) >= Number(currentBid)) {
-    updateCurrentBid(currentBid)
+  if (Number(dollarsLeftElement.innerHTML) < Number(currentBid)) {
+    alert('Ya broke, bitch!')
+  }
+  else if (Number(moviesOwnedElement.innerHTML) >= 10 ) {
+    alert('10 is plenty. Give it a rest.')
   }
   else {
-    alert('Ya broke, bitch!')
+    updateCurrentBid(currentBid)
   }
 }
 
@@ -329,23 +370,30 @@ function endBidding(){
     }
     firebase.database().ref('/draft/users/' + winningBid.username).once('value')
     .then(function(snapshot){
-      return snapshot.val().dollarsLeft
+      return snapshot.val()
     }).then(function(winningBidderStatus){
       firebase.database().ref('/draft/users/' + winningBid.username).set({
-        dollarsLeft: winningBidderStatus - winningBid.currentBid
+        dollarsLeft: winningBidderStatus.dollarsLeft - winningBid.currentBid,
+        moviesOwned: winningBidderStatus.moviesOwned + 1
+      })
+      counter = 0
+    })
+    .then(checkIfActive)
+    .then(function(){
+      firebase.database().ref('currentBidder/').set({
+        username: "",
+        currentBid: "",
+        title: "",
+        releaseDate: "",
+        next: userKeyArray[currentUserIndex],
+        currentUserIndex: currentUserIndex
       })
     })
-    firebase.database().ref('currentBidder/').set({
-      username: "",
-      currentBid: "",
-      title: "",
-      releaseDate: "",
-      next: userKeyArray[currentUserIndex],
-      currentUserIndex: currentUserIndex
-    })
-    ref.once('value')
-    .then(function(snapshot){
-      var nextSelector = snapshot.val().currentBidder
+    .then(function(){
+      ref.once('value')
+      .then(function(snapshot){
+        var nextSelector = snapshot.val().currentBidder
+      })
     })
   })
 }
