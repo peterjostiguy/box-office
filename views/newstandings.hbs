@@ -1,0 +1,12 @@
+<div class="owners">
+  {{#each owners}}
+    <div class="owner">
+      <h3 class="owner-name">{{this.[0].owner}}</h3>
+      <div class="movies">
+        {{#each this}}
+          <h3>{{this.title}}</h3>
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+</div>
