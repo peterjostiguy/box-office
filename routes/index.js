@@ -3,7 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {message: "Sign In Below"})
+  if (req.cookies.userCode) {
+    res.redirect('/users')
+  }
+  else {
+    res.render('index', {message: "Sign In Below"})
+  }
 })
 
 router.post('/', function(req, res, next) {

@@ -1,5 +1,6 @@
 body {
-  background-color: hsl(180,3%,95%);
+  background-color: hsl(210,60%,70%);
+  font-family: 'Questrial', sans-serif;
 }
 header {
   background-color: grey;
@@ -50,35 +51,125 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-left: 5vw;
+  width: 90vw;
 }
 
 .owner {
-  padding-bottom: 2vh;
-  border: 1px solid black;
+  /* padding-bottom: 2vh; */
+  background-color: white;
+  box-shadow: 2px 5px 10px black;
   margin: 2vw;
   width: 18vw;
 }
 
+.owner-info{
+  padding-top: 0.5vh;
+  background-color: hsl(35,90%,75%);
+}
+
 .owner-name {
   margin-left: 1vw;
-  border-bottom: 1px black solid;
+}
+
+.owner-total{
+  margin-left: 3vw;
+  border-bottom: 2px black solid;
+}
+
+.current-user{
+  margin: 2vh 5vw;
+  width: 90vw;
+  height: 25vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.standings{
+  margin-top: -2.5vh;
+}
+
+.current-user-info, .leaderboard {
+  background-color: white;
+  box-shadow: 2px 5px 10px black;
+  width: 15vw;
+  height: 7vw;
+  margin-right: 2vw;
+  padding-left:1vw;
+}
+
+.leaderboard{
+  margin-top: 1vw;
+  height: 17vw;
+  width: 16vw;
+  padding-left: 0;
+}
+
+#leaderboard-header{
+  margin-left: 1vw;
+}
+
+.owned-movies{
+  display: flex;
+  width: 73vw;
+  background-color: white;
+  box-shadow: 2px 5px 10px black;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-top: 1vw;
+  justify-content: space-around;
+}
+
+.owned-movie {
+  display: flex;
+  max-width: 20vw;
+  flex-direction: column;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-bottom:2vh;
+  box-shadow: 2px 5px 5px gray;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.individual-leader{
+  display: flex;
+  justify-content: space-between;
+}
+
+.owned-movie-money {
+  display: flex;
+  margin-top: -3vh;
+  margin-bottom: -1vh;
+  /* justify-content: space-between; */
+}
+
+.per-dollar {
+  margin-left: 4vw;
 }
 
 .movies {
   height: 35vh;
   overflow-y: scroll;
+  /* background-color: lightgray; */
 }
 
 .movie {
+  margin-left: 1vw;
+  margin-right: 2vw;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.movie-title{
+  width: 15vw;
+  overflow: wrap;
 }
 
 .title {
   font-weight: bold;
   width: 5vw;
 }
-
 
 #all-movies {
   width: 90vw;
@@ -95,6 +186,10 @@ header {
   justify-content: space-around;
 }
 
+ol{
+  margin-left: -1vw;
+}
+
 button {
   height: 50%;
   background-color: white;
@@ -105,7 +200,7 @@ button {
 .draft-movie, .user-total, button {
   margin: 1vh 1vw;
   background-color: white;
-  box-shadow: 0px 3px 5px #888888;
+  box-shadow: 2px 5px 10px black;
 }
 
 .draft-release-date {
