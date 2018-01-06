@@ -332,7 +332,7 @@ display : block;
     display: none;
   }
 
-  .owner-info:target+div {
+  .owner-info:hover+div {
     display:inline;
   }
 
