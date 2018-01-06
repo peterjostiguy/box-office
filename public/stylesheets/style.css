@@ -207,7 +207,7 @@ button {
   display: flex;
 }
 
-#start-button {
+#start-button, #select-league {
   display: none;
 }
 
@@ -228,6 +228,7 @@ display: none;
 .user-total:hover .user-movie-list{
 display : block;
 }
+
 @media(max-width:800px) {
   #all-user-total{
     /*height: 70vh;*/
@@ -265,4 +266,74 @@ display : block;
   .second-container{
     margin-bottom: 2vh;
   }
+  .current-user{
+    width: 95vw;
+    height: auto;
+    margin: 2vh 0;
+    flex-direction: column;
+  }
+
+  .current-user-info, .leaderboard, .owned-movies {
+    width: 95vw;
+    height: auto;
+    align-items: center;
+  }
+
+  .leaderboard {
+    padding: 1vh 0;
+    padding-left: 1vw;
+    margin-top: 2vh;
+  }
+
+  .current-user-info {
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+
+  .owned-movies{
+    margin-top: 2vh;
+    flex-wrap: nowrap;
+    height: auto;
+    justify-content: space-around;
+  }
+
+  .owned-movie{
+    width: 75vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -3vh;
+    box-shadow: none;
+    padding:0;
+  }
+
+  .owned-movie-money {
+    display: flex;
+    margin-top: -3vh;
+    margin-bottom: -1vh;
+    /* justify-content: space-between; */
+  }
+
+  .owners {
+    margin-top: 2vh;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0vw;
+    width: 95vw;
+  }
+
+  .owner {
+    width: 95vw;
+  }
+
+  .movies{
+    display: none;
+  }
+
+  .owner-info:target+div {
+    display:inline;
+  }
+
 }

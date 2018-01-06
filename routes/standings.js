@@ -18,6 +18,7 @@ var owners = {}
 var currentOwner = {movies:[], ownerTotal: 0}
 var userCode
 var leaderArray = []
+var spreadsheetIndex
 
 function updateOwnerObject(movieObject, userCode){
   if (movieObject.owner === userCode) {
@@ -107,9 +108,12 @@ function stringifyTotals(){
   }
 }
 
-router.get('/', function(req, res, next){
+router.get('/:league', function(req, res, next){
+  console.log(req.params.league)
   if (req.cookies.userCode) {
     ref.once('value', function(snapshot){
+      spreadsheetIndex = snapshot.val().leagues[req.params.league].spreadsheetIndex
+      // console.log("SSI", spreadsheetIndex)
       var users = snapshot.val().users
       userCode = users[req.cookies.userCode].username
     }).then(function(){
@@ -120,7 +124,7 @@ router.get('/', function(req, res, next){
           },
           function getInfoAndWorksheets(step) {
             doc.getInfo(function(err, info) {
-              sheet = info.worksheets[8]
+              sheet = info.worksheets[spreadsheetIndex]
               step()
             })
           },
@@ -135,7 +139,7 @@ router.get('/', function(req, res, next){
               updateHTML(cells, userCode)
               step()
               stringifyTotals()
-              res.render('newstandings', {owners: owners, currentUser: currentOwner, leaders: leaderArray})
+              res.render('standings', {owners: owners, currentUser: currentOwner, leaders: leaderArray})
             })
           }
         ], function(err){

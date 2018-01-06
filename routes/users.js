@@ -17,38 +17,11 @@ router.post('/signup', function(req, res, next) {
   // This doesn't protect against duplicates
   bcrypt.hash(req.body.password, 10, function(err, hash){
     req.body.password = hash
+    req.body.leagues = {exists: false}
     usersRef.push().set(req.body)
   })
   res.render('index', {user: req.body.username})
 })
-
-// async.series([
-//   function setAuth(step) {
-//     var creds = require('../google-generated-creds.json')
-//     doc.useServiceAccountAuth(creds, step);
-//   },
-//   function getInfoAndWorksheets(step) {
-//     doc.getInfo(function(err, info) {
-//       sheet = info.worksheets[8]
-//       step()
-//     })
-//   },
-//   function workingWithCells(step){
-//     sheet.getCells({
-//       'min-row': 2,
-//       'max-row': 125,
-//       'max-col': 4,
-//       'return-empty': true
-//     }, function(err, cells) {
-//       console.log("DID SOMETHING")
-//       for (var i = 0; i < cells.length; i++) {
-//         cells[i].value = "New"
-//         cells[i].save()
-//       }
-//       step()
-//     })
-//   }
-// ])
 
 router.post('/signin', function(req, res, next){
   ref.once('value', function(snapshot){
@@ -87,7 +60,13 @@ router.post('/signin', function(req, res, next){
 
 router.get('/', function(req, res, next) {
   if (req.cookies.userCode) {
-    res.render('users')
+    console.log(req.cookies.userCode)
+    usersRef.once('value')
+    .then(function(snapshot){
+      console.log(snapshot.val()[req.cookies.userCode]);
+      var usersLeagues = Object.values(snapshot.val()[req.cookies.userCode].leagues)
+      res.render('users', {leagues: usersLeagues})
+    })
   }
   else {
     res.redirect('/')
