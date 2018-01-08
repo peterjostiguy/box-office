@@ -1,3 +1,15 @@
 #click-to-join, #league-drop-down{
   display: none;
 }
+
+@media(max-width:700px) {
+  button{
+    width: 95vw;
+    height: 15vh;
+    margin-left: 0;
+    font-size: 2rem;
+  }
+  .league-buttons{
+    margin-bottom: 5vh;
+  }
+}

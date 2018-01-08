@@ -6,11 +6,8 @@ var admin = require('firebase-admin')
 var serviceAccount = require("../firebase-boxoffice.json")
 var ref = require('./firebase.js')
 
-//Why isn't ownerArray populated the first time?
-//Add league specificity
-//Put free agents somewhere
+//Put free agents somewhere on desktop
 //Display Release date if no total
-
 
 var doc = new GoogleSpreadsheet('1L9DhmZlw1yNtk0O4mV0vTdEf92mz63AjTaN8_4BxmpU')
 var sheet
@@ -109,11 +106,9 @@ function stringifyTotals(){
 }
 
 router.get('/:league', function(req, res, next){
-  console.log(req.params.league)
   if (req.cookies.userCode) {
     ref.once('value', function(snapshot){
       spreadsheetIndex = snapshot.val().leagues[req.params.league].spreadsheetIndex
-      // console.log("SSI", spreadsheetIndex)
       var users = snapshot.val().users
       userCode = users[req.cookies.userCode].username
     }).then(function(){

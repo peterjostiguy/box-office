@@ -1,22 +1,21 @@
 <link rel="stylesheet" href='/stylesheets/user-style.css'>
-<h1>Box Office</h1>
+<h1>What's good, </br>{{username}}?</h1>
 <h3>{{message}}</h3>
 
+<div class="league-buttons">
+  {{#each leagues}}
+    {{#if this}}
+      <a href="/standings/{{this}}"><button type="button" name="button">{{this}}&nbsp;Standings</button></a>
+    {{/if}}
+  {{/each}}
+</div>
 
   <a href="/draft"><button type="button" name="button">Draft</button></a>
   <button type="button" name="button" id='join-league-button'>Join League</button>
   <select id="league-drop-down" name="">
-    <option value="">Stand-in</option>
   </select>
   <button type="button" name="button" id="click-to-join">Join!</button>
 
-  <div class="league-buttons">
-    {{#each leagues}}
-      {{#if this}}
-        <a href="/standings/{{this}}"><button type="button" name="button">{{this}} &nbsp Standings</button></a>
-      {{/if}}
-    {{/each}}
-  </div>
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
   var config = {

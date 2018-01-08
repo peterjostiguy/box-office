@@ -49,12 +49,11 @@
   {{#each owners}}
   {{#unless this.movies.[0].owner}}
     <div class="owner">
-      <h3 class="owner-name">Free Agents</h3>
+      <h3 class="owner-name free-agents" onclick="">Free Agents</h3>
       <div class="movies">
         {{#each this.movies}}
           <div class="movie">
             <h4>{{this.title}}</h4>
-            <h4>${{this.total}}</h4>
           </div>
         {{/each}}
       </div>

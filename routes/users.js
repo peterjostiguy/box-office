@@ -65,7 +65,8 @@ router.get('/', function(req, res, next) {
     .then(function(snapshot){
       console.log(snapshot.val()[req.cookies.userCode]);
       var usersLeagues = Object.values(snapshot.val()[req.cookies.userCode].leagues)
-      res.render('users', {leagues: usersLeagues})
+      var username = snapshot.val()[req.cookies.userCode].username
+      res.render('users', {leagues: usersLeagues, username: username})
     })
   }
   else {
