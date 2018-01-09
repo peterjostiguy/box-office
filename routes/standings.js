@@ -17,6 +17,8 @@ var userCode
 var leaderArray = []
 var spreadsheetIndex
 
+//this is being called AFTER updateHTML and that's why it needs to be refreshed
+
 function updateOwnerObject(movieObject, userCode){
   if (movieObject.owner === userCode) {
     currentOwner.movies.push(movieObject)
@@ -31,8 +33,10 @@ function updateOwnerObject(movieObject, userCode){
 }
 
 function updateHTML(cells, userCode){
+  console.log(owners);
   ownerArray = Object.keys(owners)
   currentOwner = {userName:userCode, movies:[], ownerTotal: 0}
+  console.log(ownerArray)
   resetMovies(ownerArray)
   sheetData = []
   for (var i = 0; i < cells.length; i++) {

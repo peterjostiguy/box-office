@@ -1,3 +1,27 @@
 <h1>It's over! Go think about your choices.</h1>
 
-<a href="/users"><button type="button" name="button">Take Me Home</button></a>
+{{#if user}}
+  <h1>Hold up! Check this sheet: https://docs.google.com/spreadsheets/u/1/d/1L9DhmZlw1yNtk0O4mV0vTdEf92mz63AjTaN8_4BxmpU/edit?usp=sheets_home&ths=true</h1>
+  <h2>Make a new page, name it the league name and [whatever number is next]. Enter that number here:</h2>
+  <input type="number" name="" value="" id='spreadsheet-number'>
+
+    <button type="button" name="button" id='save-sheet'>Take Me Home</button>
+{{/if}}
+
+{{#unless user}}
+  <a href="/users"><button type="button" name="button">Take Me Home</button></a>
+{{/unless}}
+
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyCRU98WSXwbbR67R8s7axG2JOw1uBHRWqY",
+    authDomain: "box-office-fantasy.firebaseapp.com",
+    databaseURL: "https://box-office-fantasy.firebaseio.com/",
+    storageBucket: "gs://box-office-fantasy.appspot.com"
+  }
+  firebase.initializeApp(config)
+  var db = firebase.database()
+  var ref = db.ref()
+</script>
+<script type="text/javascript" src="/javascripts/done.js"></script>

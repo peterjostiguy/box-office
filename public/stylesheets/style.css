@@ -8,7 +8,7 @@ header {
 
 #current-movie {
   background-color: white;
-  margin: 2vh 5vw;
+  margin: 2vh 4vw;
   width: 90vw;
   height: 35vh;
   display: flex;
@@ -17,7 +17,7 @@ header {
 
 #all-user-total{
   background-color: white;
-  margin: 2vh 5vw;
+  margin: 2vh 4vw;
   width: 90vw;
   /*height: 35vh;*/
   display: flex;
@@ -173,7 +173,7 @@ header {
 
 #all-movies {
   width: 90vw;
-  margin: 2vh 5vw;
+  margin: 2vh 4vw;
   display: none;
   justify-content: space-around;
   background-color: white;
@@ -239,6 +239,7 @@ display : block;
     height: 70vh;
     width: 95vw;
     margin: 1vh;
+    margin-left: 0.15vw;
   }
   #current-movie-bid {
     height: 40vh;
@@ -258,9 +259,13 @@ display : block;
   button {
     width: 25vw;
   }
+  #all-user-total{
+    margin-left: 0.15vw;
+  }
   #all-movies {
     width: 95vw;
     margin: 1vh;
+    margin-left: 0.15vw;
   }
   .second-container{
     margin-bottom: 2vh;

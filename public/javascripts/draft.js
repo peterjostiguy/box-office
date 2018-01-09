@@ -15,6 +15,7 @@ var moviesOwnedElement = document.getElementById('current-user-movies-owned')
 var allMoviesDiv = document.getElementById('all-movies')
 var allUserTotalDiv = document.getElementById('all-user-total')
 var selectLeague = document.getElementById('select-league')
+var timerElement = document.getElementById('timer')
 
 //Global Variables
 var movieDatabase
@@ -25,6 +26,7 @@ var currentBid
 var draftIsActive
 var currentUser
 var nextUser
+
 
 //endBidding on a timer instead of a button?
 //movie poster?
@@ -169,7 +171,8 @@ draftIsActiveDB.on('value', function(snapshot) {
         return movie.owner
       })
       userDatabase = snapshot.val().users
-      userKeyArray = Object.values(snapshot.val().leagues[selectLeague.value])
+      var currentLeague = snapshot.val().draft.league
+      userKeyArray = Object.values(snapshot.val().leagues[currentLeague])
     }).then(function(){
       theWholeDamnPage.style.display = 'inline'
       waitingMessage.style.display = 'none'
@@ -180,7 +183,6 @@ draftIsActiveDB.on('value', function(snapshot) {
         var currentDraftInfo = snapshot.val()
         dollarsLeftElement.innerHTML = currentDraftInfo.users[currentUser].dollarsLeft
         moviesOwnedElement.innerHTML = "Movies Owned: " + currentDraftInfo.users[currentUser].moviesOwned
-        //Can remove bid buttons
         if (currentDraftInfo.users[currentUser].moviesOwned >= 10) {
           for (var i = 0; i < bidButtons.length; i++) {
             bidButtons[i].style.display = 'none'
@@ -227,8 +229,15 @@ currentBidDB.on('value', function(snapshot) {
     currentBidElement.innerHTML = currentBidStatus.currentBid
     if (userDatabase && currentBidStatus.username) {
       currentBidderElement.innerHTML = "Current Bidder:    " + userDatabase[currentBidStatus.username].username
+      // count += 15
+      // var timer = setInterval(function() {
+      //     timerElement.innerHTML = count
+      //     count --
+      //     if(count <= 1) clearInterval(timer)
+      // }, 1000)
     }
     else if (userDatabase && !currentBidStatus.username){
+      timerElement.innerHTML = ""
       currentBidderElement.innerHTML = currentBidderElement.innerHTML + "  won!"
     }
   }
@@ -285,13 +294,6 @@ startButton.addEventListener('click', function(){
 
     userDatabase = snapshot.val().users
     userKeyArray = Object.values(snapshot.val().leagues[selectLeague.value])
-
-    // for (var userKey in userDatabase) {
-    //   if (userDatabase.hasOwnProperty(userKey)) {
-    //     userKeyArray.push(userKey)
-    //   }
-    // }
-    // console.log(userKeyArray)
   }).then(function(){
     updateMovieHTML(updatedUnownedMovieDB)
     var userObject = {}
@@ -304,6 +306,7 @@ startButton.addEventListener('click', function(){
     firebase.database().ref('/draft').set({
       isActive: true,
       isOver: false,
+      league: selectLeague.value,
       users: userObject
     })
     currentUserIndex = 0

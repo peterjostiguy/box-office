@@ -120,7 +120,12 @@ router.get('/donezo', function(req, res, next){
       }
     ])
   })
-  res.render('done')
+  if (req.cookies.isAdmin === 'true') {
+    res.render('done', {user: true})
+  }
+  else {
+    res.render('done')
+  }
 })
 
 module.exports = router

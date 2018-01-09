@@ -1,14 +1,15 @@
 <div id="the-whole-damn-page">
   <div id="current-movie">
     <div class="draft-movie" id="current-movie-bid">
+      <h3 id='current-title'></h3>
       <div class="draft-release-date">
         <h3>Release Date:</h3>
         <h3 id ='current-release-date'></h3>
       </div>
-      <h3 id='current-title'></h3>
       <h2 id='current-bid'></h2>
       <h2 id='current-bidder'></h2>
       <p id="next-user"></p>
+      <h3 id='timer'></h3>
     </div>
     <div class="second-container">
       <div id='monies-left' class='draft-movie'>
@@ -47,6 +48,4 @@
   var db = firebase.database()
   var ref = db.ref()
 </script>
-<script type="text/javascript" src="/javascripts/draft.js">
-
-</script>
+<script type="text/javascript" src="/javascripts/draft.js"></script>
