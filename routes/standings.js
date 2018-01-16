@@ -6,9 +6,6 @@ var admin = require('firebase-admin')
 var serviceAccount = require("../firebase-boxoffice.json")
 var ref = require('./firebase.js')
 
-//Put free agents somewhere on desktop
-//Display Release date if no total
-
 var doc = new GoogleSpreadsheet('1L9DhmZlw1yNtk0O4mV0vTdEf92mz63AjTaN8_4BxmpU')
 var sheet
 var owners = {}
@@ -131,7 +128,7 @@ router.get('/:league', function(req, res, next){
             sheet.getCells({
               'min-row': 2,
               //Hard Code last row
-              'max-row': 97,
+              'max-row': 121,
               'max-col': 5,
               'return-empty': true
             }, function(err, cells) {

@@ -1,3 +1,20 @@
+//Breaks on refresh on /draft (ionly on heroku)
+//Breaks on endDraft (start on non-admin side)
+//Switched to user
+  //Have added logs. This was a weird one.
+
+//could I do .then to update totals as well?
+//Formatting on mobile
+//consistent formatting
+//logout
+
+//Include bought for in the userMovie dropDown
+//Display Release date if no total
+//Put free agents somewhere on desktop
+
+//endBidding on a timer instead of a button?
+//movie poster
+
 var movies = document.getElementsByClassName('draft-movie')
 var currentMovieContainer = document.getElementById('current-movie')
 var bidButtons = document.getElementsByClassName('bid-button')
@@ -9,6 +26,7 @@ var currentBidElement = document.getElementById('current-bid')
 var theWholeDamnPage = document.getElementById('the-whole-damn-page')
 var waitingMessage = document.getElementById('waiting-message')
 var startButton = document.getElementById('start-button')
+var prepButton = document.getElementById('prep-button')
 var nextUserElement = document.getElementById('next-user')
 var dollarsLeftElement = document.getElementById('current-user-dollars')
 var moviesOwnedElement = document.getElementById('current-user-movies-owned')
@@ -26,11 +44,6 @@ var currentBid
 var draftIsActive
 var currentUser
 var nextUser
-
-
-//endBidding on a timer instead of a button?
-//movie poster?
-
 
 for (var i = 0; i < document.cookie.length; i++) {
   if (document.cookie[i] === '=' && document.cookie[i-1] === 'e'){
@@ -152,6 +165,7 @@ draftIsActiveDB.on('value', function(snapshot) {
     if (currentUserIsAdmin === "true") {
       selectLeague.style.display = 'inline'
       startButton.style.display = 'inline'
+      prepButton.style.display = 'inline'
     }
   }
   else {
@@ -173,10 +187,21 @@ draftIsActiveDB.on('value', function(snapshot) {
       userDatabase = snapshot.val().users
       var currentLeague = snapshot.val().draft.league
       userKeyArray = Object.values(snapshot.val().leagues[currentLeague])
+      for (var i = 0; i < userKeyArray.length; i++) {
+        if (typeof userKeyArray[i] === "number"){
+          userKeyArray.splice(i, 1)
+        }
+      }
+      for (var i = 0; i < userKeyArray.length; i++) {
+        if (userKeyArray[i] === snapshot.val().leagues[currentLeague].password){
+          userKeyArray.splice(i, 1)
+        }
+      }
     }).then(function(){
       theWholeDamnPage.style.display = 'inline'
       waitingMessage.style.display = 'none'
       startButton.style.display = 'none'
+      prepButton.style.display = 'none'
       selectLeague.style.display = 'none'
       draftIsActiveDB.once('value')
       .then(function(snapshot){
@@ -193,7 +218,11 @@ draftIsActiveDB.on('value', function(snapshot) {
     })
   }
   if (draftIsOver) {
-    window.location.replace("users/donezo")
+    ref.once('value')
+    .then(function(snapshot){
+      var currentLeague = snapshot.val().draft.league
+      window.location.replace("users/donezo/" + currentLeague)
+})
   }
 })
 
@@ -201,6 +230,7 @@ function checkIfActive(){
   firebase.database().ref('/draft/users/' + userKeyArray[currentUserIndex]).once('value')
   .then(function(snapshot){
     if (snapshot.val().dollarsLeft <= 0 || snapshot.val().moviesOwned >= 10) {
+      console.log("CurrentUserIndex skipped")
       currentUserIndex ++
       if (currentUserIndex >= userKeyArray.length) {
         currentUserIndex = 0
@@ -213,6 +243,9 @@ function checkIfActive(){
       else {
         checkIfActive()
       }
+    }
+    else {
+      console.log(snapshot.val().dollarsLeft, snapshot.val().moviesOwned)
     }
   })
 }
@@ -275,7 +308,7 @@ nextBidderDB.on('value', function(snapshot) {
 })
 //Add event listeners
 
-startButton.addEventListener('click', function(){
+startButton.addEventListener('click', function(event){
   ref.once('value')
   .then(function(snapshot){
     movieDatabase = snapshot.val().movies
@@ -291,7 +324,6 @@ startButton.addEventListener('click', function(){
     updatedOwnedMovies = updatedMovieDB.filter(function(movie){
       return movie.owner
     })
-
     userDatabase = snapshot.val().users
     userKeyArray = Object.values(snapshot.val().leagues[selectLeague.value])
   }).then(function(){

@@ -207,7 +207,7 @@ button {
   display: flex;
 }
 
-#start-button, #select-league {
+#start-button, #select-league, #prep-button {
   display: none;
 }
 

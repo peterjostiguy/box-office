@@ -9,7 +9,8 @@ var index = require('./routes/index')
 var users = require('./routes/users')
 var draft = require('./routes/draft')
 var standings = require('./routes/standings')
-// var newstandings = require('./routes/newstandings')
+var create = require('./routes/create')
+var resetDraft = require('./routes/reset-draft')
 
 var app = express()
 
@@ -29,7 +30,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/draft', draft);
 app.use('/standings', standings)
-// app.use('/newstandings', newstandings)
+app.use('/create', create)
+app.use('/resetDraft', resetDraft)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

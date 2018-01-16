@@ -35,7 +35,10 @@
 <h1 id='waiting-message'>Draft starting soon</h1>
 <select id="select-league" name="">
 </select>
-<button type="button" name="button" id='start-button'>Start Draft</button>
+<form class="" action="/resetDraft" method="post">
+  <button type="submit" name="button" id='prep-button'>Prep Draft (Click Me First. Once is plenty)</button>
+</form>
+  <button type="button" name="button" id='start-button'>Start Draft</button>
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
   var config = {

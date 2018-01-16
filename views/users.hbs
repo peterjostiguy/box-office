@@ -10,11 +10,22 @@
   {{/each}}
 </div>
 
-  <a href="/draft"><button type="button" name="button">Draft</button></a>
-  <button type="button" name="button" id='join-league-button'>Join League</button>
-  <select id="league-drop-down" name="">
-  </select>
-  <button type="button" name="button" id="click-to-join">Join!</button>
+<a href="/draft"><button type="button" name="button">Draft</button></a>
+<button type="button" name="button" id='join-league-button'>Join League</button>
+<select id="league-drop-down" name="">
+</select>
+<input placeholder="League Password" type="text" name="" value="" id="enter-league-password">
+<button type="button" name="button" id="click-to-join">Join!</button>
+
+{{#if admin}}
+  <button type="button" name="button" id="create-league">Create League</button>
+{{/if}}
+
+<form class="" action="/create" method="post">
+  <input type="text" name="leagueName" value="" id="league-name-input" placeholder="League Name">
+  <input type="text" name="leaguePassword" value="" id="set-league-password" placeholder="League Password">
+  <button type="submit" name="button" id="add-league">Add League!</button>
+</form>
 
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
