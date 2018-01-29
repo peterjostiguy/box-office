@@ -30,10 +30,8 @@ function updateOwnerObject(movieObject, userCode){
 }
 
 function updateHTML(cells, userCode){
-  console.log(owners);
   ownerArray = Object.keys(owners)
   currentOwner = {userName:userCode, movies:[], ownerTotal: 0}
-  console.log(ownerArray)
   resetMovies(ownerArray)
   sheetData = []
   for (var i = 0; i < cells.length; i++) {
@@ -42,10 +40,10 @@ function updateHTML(cells, userCode){
       currentMovieObject.owner = cells[i].value
     }
     else if (i % 5 === 1){
-      currentMovieObject.title = cells[i].value
+      currentMovieObject.boughtFor = cells[i].value
     }
     else if (i % 5 === 2) {
-      currentMovieObject.boughtFor = cells[i].value
+      currentMovieObject.title = cells[i].value
     }
     else if (i % 5 === 3) {
       currentMovieObject.total = cells[i].value
@@ -125,6 +123,7 @@ router.get('/:league', function(req, res, next){
             })
           },
           function workingWithCells(step) {
+            console.log("Sheet", sheet);
             sheet.getCells({
               'min-row': 2,
               //Hard Code last row
@@ -132,6 +131,7 @@ router.get('/:league', function(req, res, next){
               'max-col': 5,
               'return-empty': true
             }, function(err, cells) {
+              console.log("fresh cells", cells);
               updateHTML(cells, userCode)
               step()
               stringifyTotals()
