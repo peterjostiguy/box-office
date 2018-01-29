@@ -166,7 +166,7 @@ draftIsActiveDB.on('value', function(snapshot) {
     console.log("HELLO");
     theWholeDamnPage.style.display = 'none'
     waitingMessage.style.display = 'default'
-    if (currentUserIsAdmin === "true") {
+    if (currentUserIsAdmin === "true" || currentUserIsAdmin === true) {
       console.log("HI");
       selectLeague.style.display = 'inline'
       startButton.style.display = 'inline'
