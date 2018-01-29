@@ -1,3 +1,8 @@
+//Creates Spreadsheet but not DB entry
+//Doesnt' increment spreadsheetIndex
+
+
+
 //Breaks on refresh on /draft (ionly on heroku)
 //Breaks on endDraft (start on non-admin side)
 //Switched to user
@@ -11,9 +16,6 @@
 //Include bought for in the userMovie dropDown
 //Display Release date if no total
 //Put free agents somewhere on desktop
-
-//endBidding on a timer instead of a button?
-//movie poster
 
 var movies = document.getElementsByClassName('draft-movie')
 var currentMovieContainer = document.getElementById('current-movie')
@@ -159,16 +161,20 @@ var draftIsActiveDB = firebase.database().ref('draft')
 draftIsActiveDB.on('value', function(snapshot) {
   draftIsActive = snapshot.val().isActive
   draftIsOver = snapshot.val().isOver
+  console.log("Start");
   if (!draftIsActive) {
+    console.log("HELLO");
     theWholeDamnPage.style.display = 'none'
     waitingMessage.style.display = 'default'
     if (currentUserIsAdmin === "true") {
+      console.log("HI");
       selectLeague.style.display = 'inline'
       startButton.style.display = 'inline'
       prepButton.style.display = 'inline'
     }
   }
   else {
+    console.log("HUH");
     ref.once('value')
     .then(function(snapshot){
       movieDatabase = snapshot.val().movies
@@ -387,7 +393,7 @@ function resetBid(){
       currentBid = prompt('Nice try you broke bitch')
     }
     else {
-      updateCurrentBid(currentBid)
+      updateCurrentBid(Number(currentBid))
     }
   }
 }
@@ -395,6 +401,7 @@ function resetBid(){
 function bidItUp(increase){
   currentBid = Number(currentBidElement.innerHTML)
   currentBid += Number(increase)
+  console.log(currentBid)
   if (Number(dollarsLeftElement.innerHTML) < Number(currentBid)) {
     alert('Ya broke, bitch!')
   }
@@ -408,6 +415,7 @@ function bidItUp(increase){
 
 function updateCurrentBid(mostRecentNumber){
   var currentBidder = currentUser
+  console.log(mostRecentNumber);
   firebase.database().ref('currentBidder/').set({
     username: currentBidder,
     currentBid: mostRecentNumber,
