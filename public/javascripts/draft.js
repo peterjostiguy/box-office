@@ -163,7 +163,7 @@ draftIsActiveDB.on('value', function(snapshot) {
   draftIsOver = snapshot.val().isOver
   console.log("Start");
   if (!draftIsActive) {
-    console.log("HELLO");
+    console.log("HELLO", currentUserIsAdmin);
     theWholeDamnPage.style.display = 'none'
     waitingMessage.style.display = 'default'
     if (currentUserIsAdmin === "true" || currentUserIsAdmin === true) {
