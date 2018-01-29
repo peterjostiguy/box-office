@@ -63,8 +63,9 @@ for (var i = 0; i < document.cookie.length; i++) {
 }
 
 for (var i = 0; i < document.cookie.length; i++) {
-  if (document.cookie[i-1] === 'n'){
+  if (document.cookie[i] === '=' && document.cookie[i-1] === 'n'){
     var beginAdminSlice = (i+1)
+
   }
   else if (document.cookie[i] === ';' && beginAdminSlice) {
     var endAdminSlice = i
@@ -161,20 +162,16 @@ var draftIsActiveDB = firebase.database().ref('draft')
 draftIsActiveDB.on('value', function(snapshot) {
   draftIsActive = snapshot.val().isActive
   draftIsOver = snapshot.val().isOver
-  console.log("Start");
   if (!draftIsActive) {
-    console.log("HELLO", currentUserIsAdmin);
     theWholeDamnPage.style.display = 'none'
     waitingMessage.style.display = 'default'
     if (currentUserIsAdmin === "true" || currentUserIsAdmin === true) {
-      console.log("HI");
       selectLeague.style.display = 'inline'
       startButton.style.display = 'inline'
       prepButton.style.display = 'inline'
     }
   }
   else {
-    console.log("HUH");
     ref.once('value')
     .then(function(snapshot){
       movieDatabase = snapshot.val().movies
