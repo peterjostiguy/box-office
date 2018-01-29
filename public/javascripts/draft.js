@@ -112,7 +112,7 @@ function updateUserTotalHTML(userObject){
     for (var j = 0; j < updatedOwnedMovies.length; j++) {
       if (updatedOwnedMovies[j].owner === userKeyArray[i]) {
         var movieHTMLToAdd = document.createElement('p')
-        movieHTMLToAdd.innerHTML = updatedOwnedMovies[j].title
+        movieHTMLToAdd.innerHTML = updatedOwnedMovies[j].title + "&nbsp" + updatedOwnedMovies[j].boughtFor
         userMovieList.appendChild(movieHTMLToAdd)
       }
     }
