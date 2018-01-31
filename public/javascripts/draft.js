@@ -225,13 +225,15 @@ draftIsActiveDB.on('value', function(snapshot) {
     .then(function(snapshot){
       var currentLeague = snapshot.val().draft.league
       window.location.replace("users/donezo/" + currentLeague)
-})
+    })
   }
 })
 
 function checkIfActive(){
   firebase.database().ref('/draft/users/' + userKeyArray[currentUserIndex]).once('value')
   .then(function(snapshot){
+    console.log(snapshot.val().dollarsLeft);
+    console.log(snapshot.val().moviesOwned);
     if (snapshot.val().dollarsLeft <= 0 || snapshot.val().moviesOwned >= 10) {
       console.log("CurrentUserIndex skipped")
       currentUserIndex ++

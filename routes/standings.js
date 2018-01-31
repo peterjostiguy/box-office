@@ -127,7 +127,7 @@ router.get('/:league', function(req, res, next){
             sheet.getCells({
               'min-row': 2,
               //Hard Code last row
-              'max-row': 121,
+              'max-row': 127,
               'max-col': 5,
               'return-empty': true
             }, function(err, cells) {
