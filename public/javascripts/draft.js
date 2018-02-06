@@ -241,6 +241,7 @@ function checkIfActive(){
         currentUserIndex = 0
       }
       counter ++
+      console.log(counter)
       if (counter > userKeyArray.length) {
         firebase.database().ref('/draft/isActive').set(false)
         firebase.database().ref('/draft/isOver').set(true)
@@ -455,6 +456,7 @@ function endBidding(){
     })
     .then(checkIfActive)
     .then(function(){
+      console.log("set current bidder", currentUserIndex)
       firebase.database().ref('currentBidder/').set({
         username: "",
         currentBid: "",
@@ -468,6 +470,7 @@ function endBidding(){
       ref.once('value')
       .then(function(snapshot){
         var nextSelector = snapshot.val().currentBidder
+        console.log(nextSelector)
       })
     })
   })
